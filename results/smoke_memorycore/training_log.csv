@@ -1,0 +1,4 @@
+task_id,epoch,train_loss,train_accuracy,samples_processed,elapsed_seconds
+0,0,2.9831,12.67,300,5.19
+1,0,5.9388,15.33,300,4.6
+2,0,6.4161,10.0,300,4.71

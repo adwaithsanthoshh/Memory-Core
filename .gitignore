@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments & Packaging
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Model Checkpoints & Large Weights (>100MB)
+*.pt
+*.pth
+*.bin
+*.onnx
+checkpoints/
+results/**/*.pt
+results/**/joint_final_model.pt
+
+# Datasets (large archives and image files)
+data/tiny-imagenet-200/
+data/core50/
+data/**/*.zip
+data/**/*.tar.gz
+data/**/*.JPEG
+data/**/*.jpg
+data/**/*.png
+!results/**/*.png
+!web/**/*.png
+
+# Logs & Temporary Scratch Files
+logs/
+scratch/
+*.log
+web/index_temp.html

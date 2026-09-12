@@ -1,0 +1,23 @@
+# MEMORYCORE: Continual Learning on CORe50
+# Core Deep Learning & Computer Vision
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+scipy>=1.10.0
+pillow>=9.5.0
+
+# Data Science & Benchmarking
+pandas>=2.0.0
+pyyaml>=6.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+tqdm>=4.65.0
+
+# API & Serving
+fastapi>=0.100.0
+uvicorn>=0.22.0
+pydantic>=2.0.0
+requests>=2.31.0
+
+# Testing & Reproducibility
+pytest>=7.4.0

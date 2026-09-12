@@ -1,0 +1,67 @@
+{
+  "project": {
+    "name": "MEMORYCORE",
+    "tagline": "Teach AI. Watch it forget. Teach it to remember.",
+    "track": "Track 5 - Continual Learning",
+    "seed": 42,
+    "deterministic": true,
+    "device": "auto"
+  },
+  "dataset": {
+    "name": "Tiny-ImageNet",
+    "scenario": "Split_TinyImageNet",
+    "run_id": 0,
+    "num_classes": 200,
+    "num_tasks": 20,
+    "image_size": 64,
+    "root_dir": "data/tiny-imagenet-200",
+    "metadata_dir": "data/tiny_imagenet_metadata",
+    "smoke_dir": "data/tiny_imagenet_smoke",
+    "download_url": "http://cs231n.stanford.edu/tiny-imagenet-200.zip"
+  },
+  "model": {
+    "backbone": "resnet18",
+    "pretrained": true,
+    "feature_dim": 512,
+    "num_classes": 200,
+    "freeze_features": false
+  },
+  "training": {
+    "optimizer": "adamw",
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "momentum": 0.9,
+    "batch_size": 32,
+    "epochs_per_task": 1,
+    "smoke_epochs": 1,
+    "eval_batch_size": 64
+  },
+  "continual": {
+    "memory_budgets": [
+      50,
+      100,
+      250,
+      500,
+      1000
+    ],
+    "default_memory_budget": 250,
+    "replay_sample_strategy": "reservoir",
+    "ewc_lambda": 100.0,
+    "ewc_fisher_samples": 200,
+    "lwf_temperature": 2.0,
+    "lwf_alpha": 1.0
+  },
+  "smoke_test": {
+    "enabled": false,
+    "num_tasks": 3,
+    "samples_per_task": 30,
+    "test_samples": 30,
+    "batch_size": 8,
+    "epochs_per_task": 1
+  },
+  "paths": {
+    "results_dir": "results",
+    "checkpoints_dir": "checkpoints",
+    "logs_dir": "logs"
+  }
+}

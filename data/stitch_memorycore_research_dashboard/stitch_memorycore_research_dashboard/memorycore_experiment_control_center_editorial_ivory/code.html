@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Newsreader:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#ffb4ab", "surface-container-low": "#f6f3eb", "tertiary-fixed-dim": "#d3c2c6", "tertiary-container": "#362c2f", "primary-fixed": "#ffdad5", "on-tertiary": "#ffffff", "on-tertiary-fixed-variant": "#4f4447", "on-primary-fixed-variant": "#891d19", "background": "#fcf9f1", "on-secondary-container": "#7a3b47", "outline-variant": "#dfbfbb", "error-container": "#ffdad6", "surface-container": "#f1eee6", "on-primary-fixed": "#410002", "on-secondary": "#ffffff", "surface-tint": "#a9352d", "secondary-container": "#feaab7", "inverse-on-surface": "#f3f1e9", "on-background": "#1c1c17", "on-surface-variant": "#58413f", "surface-bright": "#fcf9f1", "secondary": "#8d4a56", "on-error-container": "#93000a", "on-error": "#ffffff", "secondary-fixed": "#ffd9de", "inverse-primary": "#ffb4ab", "tertiary": "#21171a", "error": "#ba1a1a", "on-secondary-fixed-variant": "#71333f", "on-primary": "#ffffff", "on-tertiary-container": "#a19296", "primary": "#3e0001", "on-surface": "#1c1c17", "primary-container": "#650004", "secondary-fixed-dim": "#ffb2bd", "surface-variant": "#e5e2db", "tertiary-fixed": "#f0dee2", "surface-container-high": "#ebe8e0", "surface-container-lowest": "#ffffff", "surface-dim": "#dcdad2", "on-secondary-fixed": "#3a0816", "on-tertiary-fixed": "#22191c", "surface-container-highest": "#e5e2db", "outline": "#8b716e", "on-primary-container": "#f36b5e", "inverse-surface": "#31312b", "surface": "#fcf9f1" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "margin-lg": "3rem", "space-lg": "1.5rem", "gutter-sm": "1rem", "gutter": "1.5rem", "gutter-lg": "2rem", "space-md": "1rem", "margin": "2rem", "space-sm": "0.5rem", "margin-sm": "1rem", "space-xs": "0.25rem", "space-xl": "2.5rem" }, "fontFamily": { "label-md": ["JetBrains Mono"], "display-lg-mobile": ["Newsreader"], "label-lg": ["JetBrains Mono"], "body-lg": ["Inter"], "headline-sm": ["Newsreader"], "headline-lg": ["Newsreader"], "headline-lg-mobile": ["Newsreader"], "display-lg": ["Newsreader"], "body-md": ["Inter"], "headline-md": ["Newsreader"], "body-sm": ["Inter"], "label-sm": ["JetBrains Mono"] }, "fontSize": { "label-md": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }], "display-lg-mobile": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><span class="font-headline-md text-headline-md tracking-tight text-primary font-semibold">MEMORYCORE</span><span class="px-space-xs py-0.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm uppercase tracking-wider flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>CONTINUAL LEARNING LAB</span></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-semibold"><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-md text-body-md transition-colors" data-path="dashboard" href="#">Dashboard</a><a aria-current="page" class="px-space-sm py-1.5 rounded transition-colors bg-surface-container-high text-on-surface font-semibold" data-path="control-center" href="#">Control Center</a><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-md text-body-md transition-colors" data-path="live-monitor" href="#">Live Monitor</a><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-md text-body-md transition-colors" data-path="results-deep-dive" href="#">Results Deep-Dive</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden 2xl:flex items-center gap-space-xs"><div class="flex items-center gap-1.5 px-space-xs py-1 rounded bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-on-secondary-container animate-pulse"></span><span>API: CONNECTED</span></div><div class="px-space-xs py-1 rounded bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant">GPU: NVIDIA A100-SXM4</div><div class="px-space-xs py-1 rounded bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant">SEED: 42</div><div class="px-space-xs py-1 rounded bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant">DATASET: CORe50 NIC-v2-79</div></div><button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded bg-primary-container text-on-primary hover:bg-primary font-body-md text-body-md transition-colors"><span class="material-symbols-outlined text-[16px]">play_arrow</span><span>New Run</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background"><div class="flex flex-col w-full">
+<!-- Top Academic Folio Context Strip -->
+<section class="w-full px-space-lg pt-space-md pb-space-sm">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs pb-space-xs border-b border-surface-container-highest">
+<div class="flex items-center gap-space-sm font-label-sm text-label-sm text-on-surface-variant tracking-wider">
+<span class="text-primary font-semibold">EXPERIMENT EXECUTION PIPELINE</span>
+<span class="text-outline">/</span>
+<span>FASTAPI DISPATCHER</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface font-medium">CORe50 NIC-v2-79</span>
+</div>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>ENDPOINT: /api/train</span>
+<span>SPEC: REST v1.4</span>
+<span class="text-primary-container font-semibold">RUN ID: #MC-0044</span>
+</div>
+</div>
+</section>
+<!-- Editorial Section Header -->
+<section class="w-full px-space-lg py-space-md">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="space-y-space-xs max-w-3xl">
+<div class="flex items-center gap-2">
+<span class="px-space-xs py-0.5 rounded bg-secondary-container/20 text-on-secondary-container font-label-sm text-label-sm uppercase font-semibold">Dispatch Deck · Module 02</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Avalanche Framework Orchestrator</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-serif">Experiment Control Center</h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Configure continual learning strategies, calibrate memory retention budgets, and dispatch distributed training jobs to the local FastAPI execution engine (<code class="px-1.5 py-0.5 bg-surface-container font-label-sm text-primary">POST /api/train</code>). Parameterized across 79 non-i.i.d. object recognition batches.
+          </p>
+</div>
+<!-- Live Worker Telemetry Badge -->
+<div class="p-space-sm rounded-lg bg-surface-container-low shadow-sm flex flex-col gap-1 min-w-[280px]">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase tracking-wider">Node Status</span>
+<span class="flex items-center gap-1.5 text-on-surface font-medium">
+<span class="w-2 h-2 rounded-full bg-on-secondary-container animate-ping"></span>
+              IDLE • READY
+            </span>
+</div>
+<div class="font-label-md text-label-md text-primary font-semibold truncate">NVIDIA A100-SXM4-80GB (Node 0)</div>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant border-t border-surface-container-highest/60 pt-1 mt-0.5">
+<span>VRAM: 14.2 / 80 GB</span>
+<span class="font-label-sm text-label-sm">CUDA 12.2 · PyTorch 2.2</span>
+</div>
+</div>
+</div>
+<!-- Extended System Banner -->
+<div class="mt-space-md p-space-sm rounded bg-surface-container flex flex-wrap items-center justify-between gap-space-sm text-on-surface font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary-container">dns</span>
+<span class="text-on-surface-variant">Dispatch Daemon:</span>
+<span class="font-semibold text-primary">http://127.0.0.1:8000</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">database</span>
+<span class="text-on-surface-variant">Active Stream:</span>
+<span class="font-semibold">CORe50 NIC-v2-79 (79 Incremental Batches, 50 Objects)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">verified</span>
+<span class="text-on-surface-variant">Validation Integrity:</span>
+<span class="text-on-surface font-semibold">Strict Protocol (Seed: 42)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Dual Column Workspace: Strategy Selection + Form + Terminal Preview -->
+<section class="w-full px-space-lg py-space-md">
+<div class="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Left 8 Columns: Method Matrix & Hyperparameter Panel -->
+<div class="xl:col-span-8 flex flex-col gap-space-lg">
+<!-- SECTION 1: Continual Learning Strategy Selector -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div>
+<span class="font-label-sm text-label-sm uppercase text-secondary font-semibold tracking-wider">Architecture Selection</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-serif">1. Continual Learning Strategy</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Select 1 of 6 Baselines</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-md" id="strategyGrid">
+<!-- Strategy 1: MemoryCore (Default & Selected) -->
+<div class="strategy-card group cursor-pointer relative p-space-md rounded-lg transition-all duration-200 bg-surface-container-low shadow-sm" data-strategy="memorycore" style="background: #FFFDF6;">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-primary font-serif font-bold">MemoryCore</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold tracking-wider uppercase text-[10px]">Proposed</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 leading-relaxed">
+                Forgetting-Aware Adaptive Replay with dynamic gradient vulnerability scoring and non-uniform exemplar curation across class shifts.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Buffer: <strong class="text-primary">M = 500</strong></span>
+<span class="text-on-secondary-container font-semibold">ResNet-18 Backbone</span>
+</div>
+</div>
+<!-- Strategy 2: Naive Sequential -->
+<div class="strategy-card group cursor-pointer relative p-space-md rounded-lg transition-all duration-200 bg-surface-container-lowest hover:bg-surface-container-low" data-strategy="naive">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-surface-variant flex items-center justify-center text-transparent">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-on-surface font-serif font-medium">Naive Sequential</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant text-[10px]">Lower Bound</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 leading-relaxed">
+                Standard fine-tuning without replay or parameter regularization. Provides reference for severe catastrophic forgetting.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Buffer: <strong class="text-on-surface">None (M=0)</strong></span>
+<span class="text-outline">High Forgetting</span>
+</div>
+</div>
+<!-- Strategy 3: Random Experience Replay -->
+<div class="strategy-card group cursor-pointer relative p-space-md rounded-lg transition-all duration-200 bg-surface-container-lowest hover:bg-surface-container-low" data-strategy="replay">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-surface-variant flex items-center justify-center text-transparent">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-on-surface font-serif font-medium">Random Replay</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant text-[10px]">Uniform Replay</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 leading-relaxed">
+                Standard experience replay maintaining a uniform reservoir buffer with stochastic exemplar sampling during SGD batches.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Buffer: <strong class="text-on-surface">M Exemplars</strong></span>
+<span class="text-on-surface-variant">Memory Dependent</span>
+</div>
+</div>
+<!-- Strategy 4: Elastic Weight Consolidation (EWC) -->
+<div class="strategy-card group cursor-pointer relative p-space-md rounded-lg transition-all duration-200 bg-surface-container-lowest hover:bg-surface-container-low" data-strategy="ewc">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-surface-variant flex items-center justify-center text-transparent">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-on-surface font-serif font-medium">EWC (Kirkpatrick)</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant text-[10px]">Regularization</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 leading-relaxed">
+                Quadratic parameter penalty based on Fisher Information Matrix diagonal to protect weights crucial to previous batches.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Penalty: <strong class="text-on-surface">λ = 100.0</strong></span>
+<span class="text-on-surface-variant">O(N) Parameter Store</span>
+</div>
+</div>
+<!-- Strategy 5: Learning without Forgetting (LwF) -->
+<div class="strategy-card group cursor-pointer relative p-space-md rounded-lg transition-all duration-200 bg-surface-container-lowest hover:bg-surface-container-low" data-strategy="lwf">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-surface-variant flex items-center justify-center text-transparent">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-on-surface font-serif font-medium">LwF (Li & Hoiem)</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant text-[10px]">Distillation</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 leading-relaxed">
+                Knowledge distillation loss keeping logit distributions aligned with frozen prior task snapshot without raw rehearsal data.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Temperature: <strong class="text-on-surface">T = 2.0</strong></span>
+<span class="text-on-surface-variant">Zero-Buffer</span>
+</div>
+</div>
+<!-- Strategy 6: Joint Training -->
+<div class="strategy-card group cursor-pointer relative p-space-md rounded-lg transition-all duration-200 bg-surface-container-lowest hover:bg-surface-container-low" data-strategy="joint">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-surface-variant flex items-center justify-center text-transparent">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-on-surface font-serif font-medium">Joint Training</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant text-[10px]">Upper Bound</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 leading-relaxed">
+                Theoretical ceiling trained offline on all 79 batches simultaneously in standard i.i.d. shuffle regime.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Storage: <strong class="text-on-surface">100% Dataset</strong></span>
+<span class="text-primary-container font-semibold">Reference Oracle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Hyperparameter Calibration Form -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div>
+<span class="font-label-sm text-label-sm uppercase text-secondary font-semibold tracking-wider">Calibration Deck</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-serif">2. Hyperparameters & Benchmark Constraints</h2>
+</div>
+<span class="px-2 py-1 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Avalanche Engine v0.4</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-space-md">
+<!-- Scenario Specification -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                Benchmark Scenario (CORe50)
+              </label>
+<div class="relative">
+<select class="w-full h-11 px-3 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg border-0 focus:bg-surface focus:ring-1 focus:ring-primary-container cursor-pointer transition-colors" id="scenarioSelect">
+<option selected="" value="nicv2-79">NICv2-79 (79 Batches, 50 Objects) · Official</option>
+<option value="nc-9">NC (New Classes - 9 Batches)</option>
+<option value="ni-8">NI (New Instances - 8 Batches)</option>
+</select>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Official Avalanche benchmark: 8 classes in first batch, 42 subsequent classes across 79 steps.</p>
+</div>
+<!-- Run Split Selector -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                Reproducibility Run Split & Seed
+              </label>
+<div class="flex items-center gap-2">
+<select class="w-1/2 h-11 px-3 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg border-0 focus:bg-surface focus:ring-1 focus:ring-primary-container cursor-pointer" id="runSplitSelect">
+<option selected="" value="run0">run_0 (Default)</option>
+<option value="run1">run_1</option>
+<option value="run2">run_2</option>
+<option value="run3">run_3</option>
+<option value="run4">run_4</option>
+</select>
+<div class="w-1/2 h-11 px-3 bg-surface-container-low rounded-lg flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">RNG Seed:</span>
+<input class="w-16 bg-transparent text-right font-semibold text-primary focus:outline-none" id="seedInput" type="number" value="42"/>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Deterministic PyTorch seed across CUDA tensors and dataloader permutations.</p>
+</div>
+<!-- Replay Memory Buffer Capacity (M) -->
+<div class="space-y-1.5 md:col-span-2 p-space-md rounded-lg bg-surface-container-low" id="replayBufferContainer">
+<div class="flex items-center justify-between">
+<div>
+<label class="block font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary-container">memory</span>
+                    Exemplar Buffer Capacity (M)
+                  </label>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Strict memory limit for MemoryCore & Random Replay buffers</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-surface rounded text-primary font-label-md text-label-md font-bold text-[14px]" id="bufferDisplay">500 exemplars</span>
+<span class="text-[11px] text-on-surface-variant font-label-sm">(~3.8 MB RAM)</span>
+</div>
+</div>
+<!-- Slider and Presets -->
+<div class="pt-2">
+<input class="w-full accent-primary-container cursor-pointer" id="bufferSlider" max="1000" min="50" step="50" type="range" value="500"/>
+<div class="flex justify-between items-center pt-2 font-label-sm text-label-sm text-on-surface-variant">
+<button class="preset-btn px-2 py-0.5 rounded bg-surface hover:bg-surface-container text-on-surface" data-val="50" type="button">50</button>
+<button class="preset-btn px-2 py-0.5 rounded bg-surface hover:bg-surface-container text-on-surface" data-val="100" type="button">100</button>
+<button class="preset-btn px-2 py-0.5 rounded bg-surface hover:bg-surface-container text-on-surface" data-val="250" type="button">250</button>
+<button class="preset-btn px-2 py-0.5 rounded bg-primary-container text-on-primary font-semibold" data-val="500" type="button">500 (Benchmark Standard)</button>
+<button class="preset-btn px-2 py-0.5 rounded bg-surface hover:bg-surface-container text-on-surface" data-val="1000" type="button">1,000</button>
+</div>
+</div>
+</div>
+<!-- Batch Size -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                Batch Size (SGD DataLoader)
+              </label>
+<div class="grid grid-cols-3 gap-2">
+<button class="batch-btn h-11 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" data-batch="16" type="button">16</button>
+<button class="batch-btn h-11 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold transition-colors" data-batch="32" type="button">32 (Default)</button>
+<button class="batch-btn h-11 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" data-batch="64" type="button">64</button>
+</div>
+<input id="batchSizeInput" type="hidden" value="32"/>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standard mini-batch size applied per gradient iteration.</p>
+</div>
+<!-- Learning Rate & Optimizer -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                  Learning Rate & Optimizer
+                </label>
+<span class="font-label-sm text-label-sm text-secondary">Adam (β&sub1=0.9, β&sub2=0.999)</span>
+</div>
+<div class="flex items-center gap-2">
+<input class="w-full h-11 px-3 bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg border-0 focus:bg-surface focus:ring-1 focus:ring-primary-container" id="lrInput" step="0.0001" type="number" value="0.001"/>
+<div class="px-3 h-11 rounded-lg bg-surface-container-low flex items-center text-on-surface font-label-sm text-label-sm whitespace-nowrap">
+                  Adam
+                </div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Default: 0.001 with weight decay 0.0001 on ResNet-18.</p>
+</div>
+<!-- Epochs per Batch & Regularization Weight -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                Epochs per Batch
+              </label>
+<div class="h-11 px-3 bg-surface-container-low rounded-lg flex items-center justify-between text-on-surface font-label-md text-label-md">
+<span>Passes over stream step:</span>
+<span class="font-bold text-primary">1 Epoch (Fast Continual)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mandated 1 epoch per batch under strict online setup.</p>
+</div>
+<!-- EWC Regularization Parameter (lambda) -->
+<div class="space-y-1.5" id="regContainer">
+<div class="flex items-center justify-between">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                  Regularization Strength (λ)
+                </label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">EWC / LwF Penalty</span>
+</div>
+<input class="w-full h-11 px-3 bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg border-0 focus:bg-surface focus:ring-1 focus:ring-primary-container" id="regInput" step="10" type="number" value="100.0"/>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Weighs quadratic loss on diagonal Fisher parameters.</p>
+</div>
+<!-- Quarantined Test Split Checkbox (Integrity Lock) -->
+<div class="md:col-span-2 p-space-sm rounded-lg bg-surface-container flex items-start gap-3">
+<div class="pt-0.5">
+<input checked="" class="w-4 h-4 accent-primary-container rounded cursor-not-allowed" disabled="" id="quarantineLock" type="checkbox"/>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-[15px] font-serif text-on-surface font-semibold">Strict Benchmark Integrity: Quarantined Test Sessions</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm text-[10px]">LOCKED</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Sessions <code class="text-primary font-semibold">s3</code>, <code class="text-primary font-semibold">s7</code>, and <code class="text-primary font-semibold">s10</code> are strictly held out for continual evaluation. No exemplars from these sessions may enter replay buffers or training splits.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 4 Columns: Payload Preview, Terminal Dispatch & Quick Queues -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- API Dispatch Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div>
+<span class="font-label-sm text-label-sm uppercase text-secondary font-semibold tracking-wider">FastAPI Payload</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-serif">Dispatcher Telemetry</h2>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+              JSON RPC
+            </div>
+</div>
+<!-- Tab Selector: JSON vs CLI -->
+<div class="flex items-center gap-1 pt-space-sm pb-space-xs font-label-sm text-label-sm">
+<button class="px-3 py-1 rounded bg-surface-container text-primary font-semibold transition-colors" id="tabJson">HTTP Body</button>
+<button class="px-3 py-1 rounded hover:bg-surface-container text-on-surface-variant transition-colors" id="tabCli">Avalanche CLI</button>
+<button class="ml-auto flex items-center gap-1 text-[11px] text-on-surface-variant hover:text-primary transition-colors" id="copyPayloadBtn">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>Copy</span>
+</button>
+</div>
+<!-- Code Box -->
+<div class="relative mt-space-xs rounded-lg bg-surface-container-high p-space-md font-label-sm text-label-sm text-on-surface overflow-x-auto">
+<div class="text-[11px] text-on-surface-variant pb-2 mb-2 border-b border-surface-container-highest flex items-center justify-between">
+<span>POST /api/train</span>
+<span>Host: 127.0.0.1:8000</span>
+</div>
+<pre class="text-on-surface font-label-sm text-label-sm leading-relaxed overflow-x-auto" id="payloadPreview">{
+  "strategy": "memorycore",
+  "scenario": "nicv2-79",
+  "epochs": 1,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "memory_budget": 500,
+  "seed": 42
+}</pre>
+<pre class="hidden text-on-surface font-label-sm text-label-sm leading-relaxed overflow-x-auto text-primary-container" id="cliPreview">python run.py \
+  --method memorycore \
+  --scenario nicv2-79 \
+  --epochs 1 \
+  --batch-size 32 \
+  --lr 0.001 \
+  --memory-budget 500 \
+  --seed 42</pre>
+</div>
+<!-- System Validation Checks -->
+<div class="py-space-md space-y-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span>
+                Data Integrity (CORe50 1.2GB)
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Ready</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span>
+                GPU Memory Allocation
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">< 16.5 GB Est.</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span>
+                FastAPI Training Queue
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">0 Jobs Ahead</span>
+</div>
+</div>
+<!-- Dispatch Primary CTA -->
+<div class="pt-space-xs space-y-2">
+<a class="w-full py-3 px-4 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-body-md text-body-md font-semibold text-center flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01] active:scale-[0.99]" data-path="live-monitor" href="#" id="launchJobBtn">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+<span>Launch Experiment & Stream Telemetry</span>
+</a>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center flex items-center justify-center gap-1 transition-colors" id="smokeTestBtn" type="button">
+<span class="material-symbols-outlined text-[15px] text-outline">speed</span>
+<span>Smoke Test (20s)</span>
+</button>
+<button class="py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center flex items-center justify-center gap-1 transition-colors" id="resetBtn" type="button">
+<span class="material-symbols-outlined text-[15px] text-outline">restart_alt</span>
+<span>Reset Defaults</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recent Jobs & Queue Management Drawer -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div>
+<span class="font-label-sm text-label-sm uppercase text-secondary font-semibold tracking-wider">Execution Log</span>
+<h2 class="font-headline-sm text-[18px] text-primary font-serif">Recent Benchmark Runs</h2>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:underline" data-path="results-deep-dive" href="#">View All →</a>
+</div>
+<div class="divide-y divide-surface-container pt-space-xs">
+<!-- Job MC-0043 (Queued) -->
+<div class="py-space-sm flex items-center justify-between gap-2">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">#MC-0043</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm text-[10px] font-semibold uppercase">Pending</span>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">EWC (Kirkpatrick) • λ=100.0</div>
+</div>
+<div class="text-right font-label-sm text-label-sm text-on-surface-variant">
+<span>Queued</span>
+</div>
+</div>
+<!-- Job MC-0042 (Completed) -->
+<div class="py-space-sm flex items-center justify-between gap-2">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">#MC-0042</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm text-[10px] font-semibold uppercase">Completed</span>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">MemoryCore • M=500</div>
+</div>
+<div class="text-right">
+<span class="text-primary font-label-md text-label-md font-bold">78.4% Final</span>
+<div class="text-[10px] text-on-surface-variant">14m 22s</div>
+</div>
+</div>
+<!-- Job MC-0041 (Completed) -->
+<div class="py-space-sm flex items-center justify-between gap-2">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">#MC-0041</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm text-[10px] font-semibold uppercase">Completed</span>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">Naive Sequential • M=0</div>
+</div>
+<div class="text-right">
+<span class="text-error font-label-md text-label-md font-bold">24.1% Final</span>
+<div class="text-[10px] text-on-surface-variant">11m 45s</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Scientific Reference Notes Drawer / Editorial Archival Callout -->
+<section class="w-full px-space-lg pt-space-md pb-space-xl">
+<div class="max-w-7xl mx-auto rounded-xl p-space-lg bg-surface-container-low shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+<div class="lg:col-span-8 space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary-container">article</span>
+<span class="font-label-sm text-label-sm uppercase text-secondary font-semibold tracking-wider">Protocol Specification · CORe50 NIC-v2-79</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary font-serif">Methodological Guarantees</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            The New Instances and Classes (NICv2-79) setting represents the most strenuous lifelong benchmark for object recognition. All strategies evaluated within MEMORYCORE are bound by identical memory budgets and batch ingestion cadences. MemoryCore’s gradient sensitivity gating ensures old task boundaries are preserved even under severe rehearsal bottlenecks.
+          </p>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-2 p-space-md rounded-lg bg-surface-container-lowest">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Hardware Bounds</div>
+<div class="font-headline-sm text-[16px] font-serif text-on-surface font-semibold">ResNet-18 (Pretrained Weights)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+            Input: 3 × 128 × 128 RGB crops. Normalization: ImageNet statistics. Optimizer: Adam with η = 1e-3. Evaluated at every incremental step.
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Inline Micro-Interaction Script for Hyperparameter Binding & JSON Generator -->
+<script>
+    (function() {
+      const state = {
+        strategy: 'memorycore',
+        scenario: 'nicv2-79',
+        epochs: 1,
+        batch_size: 32,
+        learning_rate: 0.001,
+        memory_budget: 500,
+        seed: 42
+      };
+
+      const strategyCards = document.querySelectorAll('.strategy-card');
+      const bufferSlider = document.getElementById('bufferSlider');
+      const bufferDisplay = document.getElementById('bufferDisplay');
+      const presetBtns = document.querySelectorAll('.preset-btn');
+      const batchBtns = document.querySelectorAll('.batch-btn');
+      const batchSizeInput = document.getElementById('batchSizeInput');
+      const scenarioSelect = document.getElementById('scenarioSelect');
+      const lrInput = document.getElementById('lrInput');
+      const seedInput = document.getElementById('seedInput');
+      const payloadPreview = document.getElementById('payloadPreview');
+      const cliPreview = document.getElementById('cliPreview');
+      const tabJson = document.getElementById('tabJson');
+      const tabCli = document.getElementById('tabCli');
+      const replayBufferContainer = document.getElementById('replayBufferContainer');
+      const copyPayloadBtn = document.getElementById('copyPayloadBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const smokeTestBtn = document.getElementById('smokeTestBtn');
+
+      function updatePayload() {
+        // Update JSON display
+        const payloadObj = {
+          strategy: state.strategy,
+          scenario: state.scenario,
+          epochs: state.epochs,
+          batch_size: Number(state.batch_size),
+          learning_rate: Number(state.learning_rate),
+          seed: Number(state.seed)
+        };
+
+        if (state.strategy === 'memorycore' || state.strategy === 'replay') {
+          payloadObj.memory_budget = Number(state.memory_budget);
+        }
+
+        if (state.strategy === 'ewc') {
+          payloadObj.ewc_lambda = 100.0;
+        }
+
+        payloadPreview.textContent = JSON.stringify(payloadObj, null, 2);
+
+        // Update CLI string
+        let cli = `python run.py \\\n  --method ${state.strategy} \\\n  --scenario ${state.scenario} \\\n  --epochs ${state.epochs} \\\n  --batch-size ${state.batch_size} \\\n  --lr ${state.learning_rate} \\\n  --seed ${state.seed}`;
+        if (state.strategy === 'memorycore' || state.strategy === 'replay') {
+          cli += ` \\\n  --memory-budget ${state.memory_budget}`;
+        }
+        if (state.strategy === 'ewc') {
+          cli += ` \\\n  --ewc-lambda 100.0`;
+        }
+        cliPreview.textContent = cli;
+      }
+
+      // Strategy Card Selection
+      strategyCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const selectedMethod = card.getAttribute('data-strategy');
+          state.strategy = selectedMethod;
+
+          strategyCards.forEach(c => {
+            c.style.background = '';
+            c.classList.remove('bg-surface-container-low', 'shadow-sm');
+            c.classList.add('bg-surface-container-lowest');
+            
+            const check = c.querySelector('.material-symbols-outlined');
+            const circle = check.parentElement;
+            circle.className = 'w-4 h-4 rounded-full bg-surface-variant flex items-center justify-center text-transparent';
+            
+            const title = c.querySelector('h3');
+            title.classList.remove('text-primary', 'font-bold');
+            title.classList.add('text-on-surface', 'font-medium');
+          });
+
+          card.style.background = '#FFFDF6';
+          card.classList.remove('bg-surface-container-lowest');
+          card.classList.add('bg-surface-container-low', 'shadow-sm');
+
+          const check = card.querySelector('.material-symbols-outlined');
+          const circle = check.parentElement;
+          circle.className = 'w-4 h-4 rounded-full bg-primary-container flex items-center justify-center text-on-primary';
+
+          const title = card.querySelector('h3');
+          title.classList.remove('text-on-surface', 'font-medium');
+          title.classList.add('text-primary', 'font-bold');
+
+          // Highlight or dim memory buffer container
+          if (selectedMethod === 'naive' || selectedMethod === 'joint' || selectedMethod === 'lwf') {
+            replayBufferContainer.classList.add('opacity-40', 'pointer-events-none');
+          } else {
+            replayBufferContainer.classList.remove('opacity-40', 'pointer-events-none');
+          }
+
+          updatePayload();
+        });
+      });
+
+      // Buffer Slider
+      bufferSlider.addEventListener('input', (e) => {
+        state.memory_budget = e.target.value;
+        bufferDisplay.textContent = `${state.memory_budget} exemplars`;
+        updatePayload();
+      });
+
+      // Buffer Preset Buttons
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-val');
+          bufferSlider.value = val;
+          state.memory_budget = val;
+          bufferDisplay.textContent = `${val} exemplars`;
+          presetBtns.forEach(b => {
+            b.className = 'preset-btn px-2 py-0.5 rounded bg-surface hover:bg-surface-container text-on-surface';
+          });
+          btn.className = 'preset-btn px-2 py-0.5 rounded bg-primary-container text-on-primary font-semibold';
+          updatePayload();
+        });
+      });
+
+      // Batch Size Buttons
+      batchBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const bVal = btn.getAttribute('data-batch');
+          state.batch_size = bVal;
+          batchSizeInput.value = bVal;
+          batchBtns.forEach(b => {
+            b.className = 'batch-btn h-11 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors';
+          });
+          btn.className = 'batch-btn h-11 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold transition-colors';
+          updatePayload();
+        });
+      });
+
+      // Scenario & Form Inputs
+      scenarioSelect.addEventListener('change', (e) => {
+        state.scenario = e.target.value;
+        updatePayload();
+      });
+
+      lrInput.addEventListener('input', (e) => {
+        state.learning_rate = e.target.value;
+        updatePayload();
+      });
+
+      seedInput.addEventListener('input', (e) => {
+        state.seed = e.target.value;
+        updatePayload();
+      });
+
+      // Code Tab Toggling
+      tabJson.addEventListener('click', () => {
+        tabJson.classList.add('bg-surface-container', 'text-primary', 'font-semibold');
+        tabJson.classList.remove('text-on-surface-variant');
+        tabCli.classList.remove('bg-surface-container', 'text-primary', 'font-semibold');
+        tabCli.classList.add('text-on-surface-variant');
+        payloadPreview.classList.remove('hidden');
+        cliPreview.classList.add('hidden');
+      });
+
+      tabCli.addEventListener('click', () => {
+        tabCli.classList.add('bg-surface-container', 'text-primary', 'font-semibold');
+        tabCli.classList.remove('text-on-surface-variant');
+        tabJson.classList.remove('bg-surface-container', 'text-primary', 'font-semibold');
+        tabJson.classList.add('text-on-surface-variant');
+        cliPreview.classList.remove('hidden');
+        payloadPreview.classList.add('hidden');
+      });
+
+      // Copy payload button
+      copyPayloadBtn.addEventListener('click', () => {
+        const textToCopy = payloadPreview.classList.contains('hidden') ? cliPreview.textContent : payloadPreview.textContent;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const original = copyPayloadBtn.innerHTML;
+          copyPayloadBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">check</span><span>Copied</span>`;
+          setTimeout(() => { copyPayloadBtn.innerHTML = original; }, 2000);
+        });
+      });
+
+      // Smoke Test Simulation
+      smokeTestBtn.addEventListener('click', () => {
+        const orig = smokeTestBtn.innerHTML;
+        smokeTestBtn.innerHTML = `<span class="material-symbols-outlined text-[15px] animate-spin">progress_activity</span><span>Validating...</span>`;
+        setTimeout(() => {
+          smokeTestBtn.innerHTML = `<span class="material-symbols-outlined text-[15px] text-primary-container">check_circle</span><span>Passed (0.42s)</span>`;
+          setTimeout(() => { smokeTestBtn.innerHTML = orig; }, 3000);
+        }, 800);
+      });
+
+      // Reset Defaults
+      resetBtn.addEventListener('click', () => {
+        state.strategy = 'memorycore';
+        state.scenario = 'nicv2-79';
+        state.epochs = 1;
+        state.batch_size = 32;
+        state.learning_rate = 0.001;
+        state.memory_budget = 500;
+        state.seed = 42;
+
+        scenarioSelect.value = 'nicv2-79';
+        lrInput.value = '0.001';
+        seedInput.value = '42';
+        bufferSlider.value = 500;
+        bufferDisplay.textContent = '500 exemplars';
+
+        // Trigger memorycore card click
+        document.querySelector('[data-strategy="memorycore"]').click();
+        updatePayload();
+      });
+
+      // Initialize
+      updatePayload();
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low py-space-lg mt-space-xl shadow-[0_-1px_8px_rgba(0,0,0,0.02)]"><div class="w-full px-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md text-on-surface-variant font-body-sm text-body-sm"><div>MEMORYCORE · Continual Learning Benchmark Suite on CORe50 (NIC-v2-79) · ResNet-18</div><div class="flex flex-wrap items-center gap-space-md font-label-sm text-label-sm"><a class="hover:text-on-surface transition-colors" href="http://127.0.0.1:8000/docs" target="_blank">FastAPI Backend: http://127.0.0.1:8000/docs</a><span>·</span><a class="hover:text-on-surface transition-colors" href="#">Swagger</a><span>·</span><a class="hover:text-on-surface transition-colors" href="#">GitHub</a><span>·</span><span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">Reproducibility Seed 42</span></div></div></footer></body></html>

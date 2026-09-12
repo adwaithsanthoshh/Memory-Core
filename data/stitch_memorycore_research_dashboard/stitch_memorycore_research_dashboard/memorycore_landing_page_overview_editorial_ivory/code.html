@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"inverse-on-surface":"#f3f1e9","outline-variant":"#dfbfbb","on-tertiary":"#ffffff","tertiary-container":"#362c2f","on-tertiary-container":"#a19296","on-tertiary-fixed-variant":"#4f4447","on-secondary-container":"#7a3b47","tertiary-fixed":"#f0dee2","inverse-surface":"#31312b","error":"#ba1a1a","on-primary-container":"#f36b5e","on-secondary-fixed-variant":"#71333f","secondary-fixed-dim":"#ffb2bd","on-tertiary-fixed":"#22191c","on-surface":"#1c1c17","background":"#fcf9f1","surface-dim":"#dcdad2","outline":"#8b716e","secondary-fixed":"#ffd9de","surface-tint":"#a9352d","primary-container":"#650004","on-surface-variant":"#58413f","tertiary-fixed-dim":"#d3c2c6","surface-container-highest":"#e5e2db","surface-container-low":"#f6f3eb","on-secondary-fixed":"#3a0816","surface-container-lowest":"#ffffff","secondary-container":"#feaab7","on-primary-fixed-variant":"#891d19","on-primary-fixed":"#410002","on-error-container":"#93000a","on-background":"#1c1c17","error-container":"#ffdad6","surface":"#fcf9f1","surface-bright":"#fcf9f1","primary-fixed":"#ffdad5","surface-container":"#f1eee6","inverse-primary":"#ffb4ab","tertiary":"#21171a","on-secondary":"#ffffff","secondary":"#8d4a56","surface-container-high":"#ebe8e0","primary":"#3e0001","on-primary":"#ffffff","primary-fixed-dim":"#ffb4ab","surface-variant":"#e5e2db","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin":"2rem","space-lg":"1.5rem","space-md":"1rem","gutter":"1.5rem","space-xl":"2.5rem","margin-lg":"3rem","space-sm":"0.5rem","space-xs":"0.25rem","gutter-sm":"1rem","margin-sm":"1rem","gutter-lg":"2rem"},"fontFamily":{"headline-lg-mobile":["Newsreader"],"label-md":["JetBrains Mono"],"display-lg":["Newsreader"],"label-lg":["JetBrains Mono"],"body-md":["Inter"],"label-sm":["JetBrains Mono"],"body-sm":["Inter"],"headline-sm":["Newsreader"],"display-lg-mobile":["Newsreader"],"body-lg":["Inter"],"headline-lg":["Newsreader"],"headline-md":["Newsreader"]},"fontSize":{"headline-lg-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"500"}],"label-md":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"500"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"400"}],"label-lg":["13px",{"lineHeight":"18px","letterSpacing":"0.02em","fontWeight":"500"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"label-sm":["10px",{"lineHeight":"14px","letterSpacing":"0.05em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"display-lg-mobile":["34px",{"lineHeight":"42px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"500"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"500"}]}}}}</script></head><body class="bg-background font-body-md text-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-sm lg:px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><img alt="MEMORYCORE Emblem Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Una2AyQr7tu3C2zSNi_kkwfJr64mpnuOVCTKidxC8s5Fswp953-8NSwcWd4V9LGHxr3MIQh0dKIvMChNARo8t0xIjTVVlaLVGlhNNOaYfT4nZvg1FbWoUUZMsL8YO3Vz7wkXKNuliFuVTnvGg8ZCKAjtekBd6paKZnUC5JEJVVBCyOEFDN6pPH82BnL1C-a93CqyfxbregGGwZJnyuAW5XWKnLgWpofKLcvY3AjTN_Ax9veHyTWapQrzyQ"/><div class="flex items-center gap-space-xs"><span class="font-headline-md text-headline-md tracking-tight text-primary">MEMORYCORE</span><span class="hidden xl:inline-flex items-center px-space-xs py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">• CONTINUAL LEARNING LAB</span></div></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-body-md rounded"><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview-and-landing" href="#">Overview &amp; Landing</a><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="control-center" href="#">Control Center</a><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="live-monitor" href="#">Live Monitor</a><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="results-deep-dive" href="#">Results Deep-Dive</a><a class="px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="memory-landscape" href="#">Memory Landscape</a></nav><div class="flex items-center gap-space-sm shrink-0"><div class="hidden 2xl:flex items-center gap-space-xs"><span class="px-space-xs py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant uppercase">API: CONNECTED</span><span class="px-space-xs py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant uppercase">GPU: NVIDIA A100</span><span class="px-space-xs py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant uppercase">SEED: 42</span></div><a class="hidden sm:inline-flex items-center justify-center px-space-md py-1.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high hover:text-on-surface shadow-[0_1px_4px_rgba(0,0,0,0.04)] font-body-md text-body-md transition-colors" data-path="documentation" href="#">Documentation</a><a class="inline-flex items-center justify-center px-space-md py-1.5 rounded bg-primary-container text-on-primary hover:bg-primary hover:text-on-primary shadow-[0_1px_4px_rgba(0,0,0,0.08)] font-body-md text-body-md transition-colors" data-path="control-center" href="#">New Run</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<!-- Top Archival Reference Bar -->
+<div class="w-full bg-surface-container-high py-space-xs px-margin-sm lg:px-margin shadow-sm">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1 text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="tracking-widest uppercase font-semibold text-primary">MONOGRAPH REF: CORE-2025-0814</span>
+<span class="text-outline">/</span>
+<span>BENCHMARK PROTOCOL: NICv2-79</span>
+<span class="text-outline">/</span>
+<span>TEST SPLIT: SESSIONS [s3, s7, s10] STRICT HOLD-OUT</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="hidden md:inline text-on-surface-variant">PEER-REVIEW ARCHIVE: VOL. 42 NO. 3</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-lowest text-primary font-mono font-medium">arXiv:2403.09118v2</span>
+</div>
+</div>
+</div>
+<!-- Hero Monograph Section -->
+<section class="relative w-full overflow-hidden bg-background py-space-xl lg:py-24">
+<!-- Ambient academic coordinate grid pattern in background -->
+<div class="absolute inset-0 pointer-events-none opacity-[0.035] bg-[radial-gradient(#650004_1px,transparent_1px)] [background-size:24px_24px]"></div>
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin relative">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
+<!-- Left Hero Column: Typographic & Editorial Arguments -->
+<div class="lg:col-span-7 flex flex-col items-start">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-high text-primary mb-space-md">
+<span class="material-symbols-outlined text-[15px]">science</span>
+<span class="font-label-sm text-label-sm tracking-widest uppercase font-medium">
+              RESEARCH INITIATIVE // CORe50 NIC-v2-79 LIFELONG BENCHMARK • SEED: 42 • RESNET-18 BACKBONE
+            </span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary tracking-tight leading-[1.08] mb-space-md">
+            Teach AI. <br/>
+<span class="italic font-display-lg text-secondary">Watch it forget.</span><br/>
+            Teach it to remember.
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed max-w-2xl mb-space-lg">
+            MEMORYCORE investigates catastrophic forgetting in deep neural networks under strict, fixed replay budgets. By evaluating dynamic representation interference across 79 incremental object batches, high-vulnerability memories are prioritized to preserve knowledge across non-stationary visual environments.
+          </p>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center gap-space-sm mb-space-lg w-full sm:w-auto">
+<a class="inline-flex items-center justify-center gap-space-xs px-space-lg py-3 rounded-lg bg-primary-container text-on-primary font-body-md text-body-md font-medium hover:bg-primary transition-all shadow-md" href="#control-center">
+<span>Launch Experiment Deck</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="inline-flex items-center justify-center gap-space-xs px-space-lg py-3 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md font-medium hover:bg-surface-container-high transition-all shadow-sm" href="#matrix-view">
+<span class="material-symbols-outlined text-[18px] text-secondary">grid_view</span>
+<span>Explore Interactive Results &amp; Matrix</span>
+</a>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">description</span>
+<a class="hover:text-primary underline underline-offset-4 decoration-outline-variant transition-colors" href="#monograph-pdf">
+              Download Scientific Monograph (PDF) [arXiv:2403.09118v2]
+            </a>
+<span class="text-outline-variant">•</span>
+<span class="text-on-surface-variant">18 Pages, 14 Figures, Dual-Column</span>
+</div>
+</div>
+<!-- Right Hero Column: Concentric Architectural Target & Emblem -->
+<div class="lg:col-span-5 flex justify-center items-center relative mt-space-lg lg:mt-0">
+<div class="relative w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] flex items-center justify-center">
+<!-- Outer Target Dial Ring -->
+<div class="absolute inset-0 rounded-full bg-surface-container-low/60 shadow-xl flex items-center justify-center animate-pulse duration-1000"></div>
+<!-- Concentric Ring 2 -->
+<div class="absolute inset-6 rounded-full bg-surface-container/70 shadow-sm flex items-center justify-center"></div>
+<!-- Concentric Ring 3 with Radial Tick Markers -->
+<div class="absolute inset-16 rounded-full bg-surface-container-high/60 shadow-inner flex items-center justify-center">
+<svg class="w-full h-full text-outline-variant/40 animate-[spin_60s_linear_infinite]" viewbox="0 0 200 200">
+<circle cx="100" cy="100" fill="none" r="94" stroke="currentColor" stroke-dasharray="2, 6" stroke-width="1"></circle>
+<circle cx="100" cy="100" fill="none" r="76" stroke="currentColor" stroke-dasharray="8, 12" stroke-width="0.75"></circle>
+</svg>
+</div>
+<!-- Central Platform with Emblem Logo -->
+<div class="relative z-10 w-40 h-40 sm:w-44 sm:h-44 rounded-full bg-surface-container-lowest shadow-xl flex flex-col items-center justify-center p-space-md">
+<div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-background flex items-center justify-center p-2 shadow-inner">
+<img alt="MEMORYCORE Emblem Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Una2AyQr7tu3C2zSNi_kkwfJr64mpnuOVCTKidxC8s5Fswp953-8NSwcWd4V9LGHxr3MIQh0dKIvMChNARo8t0xIjTVVlaLVGlhNNOaYfT4nZvg1FbWoUUZMsL8YO3Vz7wkXKNuliFuVTnvGg8ZCKAjtekBd6paKZnUC5JEJVVBCyOEFDN6pPH82BnL1C-a93CqyfxbregGGwZJnyuAW5XWKnLgWpofKLcvY3AjTN_Ax9veHyTWapQrzyQ"/>
+</div>
+<span class="font-label-sm text-label-sm font-semibold tracking-widest text-primary mt-1">CORE MATRIX</span>
+</div>
+<!-- Orbital Telemetry Tag 1: Buffer -->
+<div class="absolute -top-2 right-2 sm:right-6 z-20 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest text-on-surface shadow-md">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-semibold text-primary">Latent Memory Buffer:</span>
+<span class="text-on-surface">500 Exemplars</span>
+</div>
+</div>
+<!-- Orbital Telemetry Tag 2: Adaptive Gating -->
+<div class="absolute bottom-6 -left-2 sm:-left-6 z-20 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest text-on-surface shadow-md">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-semibold text-primary">Adaptive Gating:</span>
+<span class="text-on-surface">Fisher Vulnerability</span>
+</div>
+</div>
+<!-- Orbital Telemetry Tag 3: Retention Rate -->
+<div class="absolute -bottom-4 right-8 sm:right-12 z-20 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest text-on-surface shadow-md">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-semibold text-primary">Interference Suppression:</span>
+<span class="text-on-surface font-bold">94.8% Retained</span>
+</div>
+</div>
+<!-- Architectural Reticle Axes -->
+<div class="absolute left-0 right-0 top-1/2 h-[1px] bg-outline-variant/30 pointer-events-none"></div>
+<div class="absolute top-0 bottom-0 left-1/2 w-[1px] bg-outline-variant/30 pointer-events-none"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Top-Line Scientific Impact KPIs (4-Card Horizontal Grid) -->
+<section class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-space-sm">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">EMPIRICAL VALIDATION</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-0.5">Statistical Performance Ceiling on NIC-v2-79</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">
+          Averaged over 5 independent seed initializations with ResNet-18 (8.7M parameters) evaluated at every incremental transition.
+        </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">METRIC // ACC_F</span>
+<span class="inline-flex items-center px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary font-semibold">+3.8% vs Reservoir</span>
+</div>
+<div class="font-headline-lg text-primary text-[44px] leading-none mb-space-xs font-semibold">94.8%</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Best Final Accuracy</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-md pt-space-xs">
+            Evaluated at Batch 79 across all 50 domestic object classes under new instances and classes.
+          </p>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary"></div>
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">METRIC // F_AVG</span>
+<span class="inline-flex items-center px-space-xs py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">-14.6% vs Naive</span>
+</div>
+<div class="font-headline-lg text-secondary text-[44px] leading-none mb-space-xs font-semibold">7.2%</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Average Forgetting</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-md pt-space-xs">
+            Drastic mitigation of catastrophic loss compared to standard continual learning regularization methods.
+          </p>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary-container"></div>
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">METRIC // BWT</span>
+<span class="inline-flex items-center px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface font-semibold">STABLE</span>
+</div>
+<div class="font-headline-lg text-primary-container text-[44px] leading-none mb-space-xs font-semibold">-0.041</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Backward Transfer</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-md pt-space-xs">
+            Near-zero representation degradation over preceding temporal domains via orthogonal subspace projections.
+          </p>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-outline"></div>
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">COMPUTE // A100</span>
+<span class="inline-flex items-center px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-semibold">FP16 MIXED</span>
+</div>
+<div class="font-headline-lg text-on-surface text-[44px] leading-none mb-space-xs font-semibold">24.7 <span class="text-body-lg font-normal text-on-surface-variant">GPU-h</span></div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Compute Footprint</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-md pt-space-xs">
+            Total wall-clock training budget for the complete 79-batch trajectory on a single node NVIDIA A100-SXM4-80GB.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Architecture & Core Algorithmic Workflow (5-Phase Interactive Visual Pipeline) -->
+<section class="w-full bg-background py-space-xl lg:py-24">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin">
+<div class="max-w-3xl mb-space-xl">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">ALGORITHMIC MECHANICS</span>
+<h2 class="font-display-lg text-display-lg text-primary tracking-tight mt-1">The 5-Phase Adaptive Replay Pipeline</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-space-sm leading-relaxed">
+          Instead of heuristic uniform caching, MEMORYCORE dynamically interrogates Fisher parameter sensitivity and latent exemplar vulnerability prior to every gradient step.
+        </p>
+</div>
+<!-- Pipeline Steps Container -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-space-sm relative">
+<!-- Phase 01 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-all group">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md font-bold text-primary px-2 py-0.5 rounded bg-surface-container-high">PHASE 01</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">stream</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Task Arrival (T_k)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Non-stationary mini-batch distribution shift. Continuous streaming stream at 128×128 native resolution without task IDs.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-xs rounded font-label-sm text-label-sm text-primary">
+            DIM: [B, 3, 128, 128]
+          </div>
+</div>
+<!-- Phase 02 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-all group">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md font-bold text-primary px-2 py-0.5 rounded bg-surface-container-high">PHASE 02</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">grain</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Gradient Orthogonality</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Subspace collision estimation via empirical Fisher kernel. Computes expected inner product between task gradients.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-xs rounded font-label-sm text-label-sm text-primary">
+            &lt;g_curr, g_mem&gt; ≥ 0
+          </div>
+</div>
+<!-- Phase 03 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-all group">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md font-bold text-primary px-2 py-0.5 rounded bg-surface-container-high">PHASE 03</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">warning</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Vulnerability Scoring</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Dynamic risk metric V_i computed from latent feature drift and margin sensitivity over recent gradient updates.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-xs rounded font-label-sm text-label-sm text-primary">
+            V_i = Δz_i × ||∇_w L||
+          </div>
+</div>
+<!-- Phase 04 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-all group">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md font-bold text-primary px-2 py-0.5 rounded bg-surface-container-high">PHASE 04</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">inventory_2</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Adaptive Allocation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Constrained knapsack reallocation over strictly 500 exemplar slots. Evicts redundant representations to minimize regret.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-xs rounded font-label-sm text-label-sm text-primary">
+            SLOTS: 500 / 500 MAX
+          </div>
+</div>
+<!-- Phase 05 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-all group">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md font-bold text-primary px-2 py-0.5 rounded bg-surface-container-high">PHASE 05</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">psychology</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Interference Replay</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Dual-objective gradient update with bounded parameter decay, guaranteeing non-catastrophic retention.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-xs rounded font-label-sm text-label-sm text-primary">
+            L_tot = L_curr + λ L_mem
+          </div>
+</div>
+</div>
+<!-- Mathematical Formulation Specimen Card -->
+<div class="mt-space-lg bg-surface-container-lowest p-space-lg rounded-xl shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+<div class="lg:col-span-8">
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-secondary font-semibold">FORMULATION EQUATION (7)</span>
+<h4 class="font-headline-sm text-headline-sm text-primary mt-1 mb-space-xs">The Vulnerability-Penalized Surrogate Optimization</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              By weighting memory exemplar replay through the localized Hessian diagonal estimate \( \mathcal{F}_{\theta} \), the parameter trajectories avoid high-curvature directions of past tasks while rapidly accommodating new manifolds.
+            </p>
+</div>
+<div class="lg:col-span-4 bg-surface-container p-space-md rounded-lg font-mono text-body-sm text-primary flex flex-col gap-1 shadow-inner">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">REGULARIZER TARGET</span>
+<div class="text-[13px] tracking-tight overflow-x-auto py-1">
+              min ∑ ℓ(f(x;θ), y) + γ ∑ V_i · ||∇ f_{x_i}||^2
+            </div>
+<span class="font-label-sm text-label-sm text-outline-variant">CONVERGENCE TOL: 1e-6</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Comparative Benchmark Leaderboard (Official CORe50 NIC-v2-79) -->
+<section class="w-full bg-surface-container-low py-space-xl" id="leaderboard">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-space-sm">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">LIFELONG BENCHMARKING</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-0.5">CORe50 NIC-v2-79 Comparative Leaderboard</h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm uppercase">79 BATCHES</span>
+<span class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm uppercase">50 CLASSES</span>
+<span class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm uppercase">REPLAY CAPACITY: 500</span>
+</div>
+</div>
+<!-- Scientific Data Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="py-space-md px-space-lg">Method &amp; Paradigm</th>
+<th class="py-space-md px-space-md">Buffer Strategy</th>
+<th class="py-space-md px-space-md">Buffer Size</th>
+<th class="py-space-md px-space-md">Final Acc (ACC_F)</th>
+<th class="py-space-md px-space-md">Avg Forgetting</th>
+<th class="py-space-md px-space-md">Backward Xfer (BWT)</th>
+<th class="py-space-md px-space-lg text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-md text-body-md text-on-surface">
+<!-- MemoryCore (Target Champion) -->
+<tr class="bg-secondary-fixed/15 hover:bg-secondary-fixed/25 transition-colors font-medium">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span class="font-headline-sm text-headline-sm text-primary">MemoryCore (Proposed)</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fisher-Vulnerability Knapsack</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface">Adaptive Vulnerability</td>
+<td class="py-space-md px-space-md font-mono text-primary font-bold">500 exemplars</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">94.8%</span>
+<span class="font-label-sm text-label-sm text-secondary block">± 0.24%</span>
+</td>
+<td class="py-space-md px-space-md font-mono text-primary font-semibold">7.2%</td>
+<td class="py-space-md px-space-md font-mono text-primary font-semibold">-0.041</td>
+<td class="py-space-md px-space-lg text-right">
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold uppercase">STATE OF ART</span>
+</td>
+</tr>
+<!-- Joint Training (Upper Bound) -->
+<tr class="hover:bg-surface-container transition-colors opacity-90">
+<td class="py-space-md px-space-lg">
+<div class="font-headline-sm text-headline-sm text-on-surface">Joint Training (Ceiling)</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Offline I.I.D. Ideal Reference</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">Unrestricted Offline</td>
+<td class="py-space-md px-space-md font-mono text-on-surface-variant">100% dataset</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-headline-sm text-on-surface">97.4%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">± 0.12%</span>
+</td>
+<td class="py-space-md px-space-md font-mono text-on-surface-variant">0.0%</td>
+<td class="py-space-md px-space-md font-mono text-on-surface-variant">+0.012</td>
+<td class="py-space-md px-space-lg text-right">
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase">OFFLINE BOUND</span>
+</td>
+</tr>
+<!-- Random Experience Replay -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-space-md px-space-lg">
+<div class="font-headline-sm text-headline-sm text-on-surface">Experience Replay (ER)</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Uniform Reservoir Sampling</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">Uniform Random</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">500 exemplars</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-headline-sm text-on-surface">91.0%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">± 0.41%</span>
+</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">21.8%</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">-0.185</td>
+<td class="py-space-md px-space-lg text-right">
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase">REPLAY BASELINE</span>
+</td>
+</tr>
+<!-- EWC -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-space-md px-space-lg">
+<div class="font-headline-sm text-headline-sm text-on-surface">Elastic Weight Consolidation</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Kirkpatrick et al., 2017</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">Zero-Replay / Fisher Prior</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">0 exemplars</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-headline-sm text-on-surface">84.3%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">± 0.58%</span>
+</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">34.1%</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">-0.290</td>
+<td class="py-space-md px-space-lg text-right">
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase">REGULARIZATION</span>
+</td>
+</tr>
+<!-- LwF -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-space-md px-space-lg">
+<div class="font-headline-sm text-headline-sm text-on-surface">Learning without Forgetting (LwF)</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Li &amp; Hoiem, 2018</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">Logit Distillation Prior</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">0 exemplars</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-headline-sm text-on-surface">79.6%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">± 0.64%</span>
+</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">42.7%</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">-0.380</td>
+<td class="py-space-md px-space-lg text-right">
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase">DISTILLATION</span>
+</td>
+</tr>
+<!-- Naive Sequential -->
+<tr class="hover:bg-surface-container transition-colors bg-error-container/10">
+<td class="py-space-md px-space-lg">
+<div class="font-headline-sm text-headline-sm text-on-surface">Naive Fine-Tuning (Lower Bound)</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Pure Sequential SGD</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">None (Complete Overwrite)</td>
+<td class="py-space-md px-space-md font-mono text-on-surface">0 exemplars</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-headline-sm text-error font-semibold">48.2%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">± 1.14%</span>
+</td>
+<td class="py-space-md px-space-md font-mono text-error font-semibold">68.4%</td>
+<td class="py-space-md px-space-md font-mono text-error font-semibold">-0.612</td>
+<td class="py-space-md px-space-lg text-right">
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm uppercase">CATASTROPHIC</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-md bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Statistical significance: p &lt; 0.001 under two-tailed paired t-test over 5 seeds against ER.</span>
+<span class="font-mono text-primary font-semibold">NIC-v2-79 TEST SESSIONS: 3, 7, 10</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Interactive Feature Exploration Cards (Deep Dive Modules) -->
+<section class="w-full bg-background py-space-xl lg:py-24" id="matrix-view">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin">
+<div class="max-w-3xl mb-space-xl">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">LABORATORY SUITE</span>
+<h2 class="font-display-lg text-display-lg text-primary tracking-tight mt-1">Interactive Research Instrumentation</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-space-sm leading-relaxed">
+          Access the real-time execution harness, lower-triangular interference matrices, and high-dimensional latent space projections directly through the integrated laboratory workbench.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Card 1: Experiment Control Center -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between" id="control-center">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="inline-flex items-center gap-space-xs font-label-sm text-label-sm font-semibold uppercase text-primary">
+<span class="material-symbols-outlined text-[18px]">terminal</span> MODULE 01 // DISPATCH
+              </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-mono text-[11px] text-on-surface-variant">FASTAPI LIVE</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-space-xs">Experiment Control Center</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md leading-relaxed">
+              Instantaneous scenario configuration and deterministic seed pinning. Generates exact JSON dispatch payloads to spin up isolated container instances on the A100 GPU cluster.
+            </p>
+<!-- Mini Specimen Readout -->
+<div class="bg-surface-container p-space-sm rounded-lg space-y-1.5 mb-space-md">
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Selected Backbone:</span>
+<span class="font-mono text-on-surface font-semibold">ResNet-18 (Torchvision 0.17)</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Exemplar Memory Cap:</span>
+<span class="font-mono text-primary font-semibold">500 items (10 / class)</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Scenario Strategy:</span>
+<span class="font-mono text-on-surface font-semibold">NIC-v2-79 (Strict Zero-Leak)</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-space-xs text-primary font-body-md text-body-md font-semibold hover:text-primary-container transition-colors" data-path="control-center" href="#">
+<span>Open Execution Panel</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<span class="font-label-sm text-label-sm text-on-surface-variant">LATENCY: 12ms</span>
+</div>
+</div>
+<!-- Card 2: Real-Time Divergence Monitor -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="inline-flex items-center gap-space-xs font-label-sm text-label-sm font-semibold uppercase text-secondary">
+<span class="material-symbols-outlined text-[18px]">monitoring</span> MODULE 02 // STREAM
+              </span>
+<span class="px-space-xs py-0.5 rounded bg-secondary-container text-on-secondary-container font-mono text-[11px] font-semibold">ACTIVE BATCH 14/79</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-space-xs">Real-Time Divergence Monitor</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md leading-relaxed">
+              Live telemetry streaming at 60Hz. Tracks dual-trajectory loss curves against Naive Sequential collapse while logging instantaneous Fisher matrix spectral radius.
+            </p>
+<!-- Inline SVG Sparkline / Trajectory Graph -->
+<div class="bg-surface-container p-space-sm rounded-lg mb-space-md">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant mb-1">
+<span>BATCH PROGRESSION (0 → 79)</span>
+<span class="text-primary font-mono font-bold">MEMORYCORE: 94.8% vs NAIVE: 48.2%</span>
+</div>
+<svg class="w-full h-24 text-primary" viewbox="0 0 300 80">
+<!-- Grid Lines -->
+<line stroke="#DFBFBB" stroke-dasharray="3,3" stroke-width="0.5" x1="0" x2="300" y1="20" y2="20"></line>
+<line stroke="#DFBFBB" stroke-dasharray="3,3" stroke-width="0.5" x1="0" x2="300" y1="50" y2="50"></line>
+<!-- Naive Sequential Decay Curve (Red/Dashed) -->
+<path d="M 0,35 Q 60,40 100,55 T 200,68 T 300,72" fill="none" stroke="#BA1A1A" stroke-dasharray="4,2" stroke-width="2"></path>
+<!-- MemoryCore Retention Trajectory (Garnet/Solid) -->
+<path d="M 0,35 Q 60,30 110,24 T 210,18 T 300,14" fill="none" stroke="#650004" stroke-width="2.5"></path>
+<!-- Current Step Indicator (Batch 14) -->
+<circle cx="53" cy="31" fill="#650004" r="4"></circle>
+<line stroke="#650004" stroke-dasharray="2,2" stroke-width="1" x1="53" x2="53" y1="0" y2="80"></line>
+</svg>
+</div>
+</div>
+<div class="pt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-space-xs text-secondary font-body-md text-body-md font-semibold hover:text-primary transition-colors" data-path="live-monitor" href="#">
+<span>View Telemetry Stream</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<span class="font-label-sm text-label-sm text-on-surface-variant">EPOCH 3 / 10</span>
+</div>
+</div>
+<!-- Card 3: Accuracy Matrix Heatmap -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="inline-flex items-center gap-space-xs font-label-sm text-label-sm font-semibold uppercase text-primary">
+<span class="material-symbols-outlined text-[18px]">unfold_more_double</span> MODULE 03 // MATRIX
+              </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-mono text-[11px] text-on-surface-variant">79 × 79 TENSOR</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-space-xs">Accuracy Matrix Heatmap</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md leading-relaxed">
+              Full lower-triangular interference evaluation matrix \( R_{i,j} \). Hover inspect individual task pairwise transfer coefficients to identify hard object instance confusion pairs.
+            </p>
+<!-- Abstract Heatmap Mini Matrix Visual -->
+<div class="bg-surface-container p-space-sm rounded-lg mb-space-md">
+<div class="grid grid-cols-8 gap-1 py-1">
+<!-- Row 1 -->
+<div class="h-4 rounded bg-primary-container" title="R_1,1: 99.2%"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<!-- Row 2 -->
+<div class="h-4 rounded bg-primary" title="R_2,1: 96.4%"></div>
+<div class="h-4 rounded bg-primary-container" title="R_2,2: 98.1%"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<!-- Row 3 -->
+<div class="h-4 rounded bg-secondary" title="R_3,1: 94.2%"></div>
+<div class="h-4 rounded bg-primary" title="R_3,2: 95.8%"></div>
+<div class="h-4 rounded bg-primary-container" title="R_3,3: 98.7%"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<!-- Row 4 -->
+<div class="h-4 rounded bg-secondary" title="R_4,1: 93.9%"></div>
+<div class="h-4 rounded bg-secondary" title="R_4,2: 94.1%"></div>
+<div class="h-4 rounded bg-primary" title="R_4,3: 96.0%"></div>
+<div class="h-4 rounded bg-primary-container" title="R_4,4: 97.9%"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+<div class="h-4 rounded bg-surface-container-highest"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono text-on-surface-variant pt-1">
+<span>GREEN/GARNET &gt; 92%</span>
+<span>AMBER: 80-91%</span>
+<span>RED &lt; 80%</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-space-xs text-primary font-body-md text-body-md font-semibold hover:text-primary-container transition-colors" data-path="results-deep-dive" href="#">
+<span>Inspect Full Tensor</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<span class="font-label-sm text-label-sm text-on-surface-variant">BWT MEAN: -0.041</span>
+</div>
+</div>
+<!-- Card 4: Adaptive Memory Landscape -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="inline-flex items-center gap-space-xs font-label-sm text-label-sm font-semibold uppercase text-secondary">
+<span class="material-symbols-outlined text-[18px]">bubble_chart</span> MODULE 04 // LATENT
+              </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-mono text-[11px] text-on-surface-variant">UMAP-2D PROJECTION</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-space-xs">Adaptive Memory Landscape</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md leading-relaxed">
+              Explore 2D UMAP projections of the 500-exemplar latent reservoir. Examine sample exemplar diagnostics (#EX-3094), cosine drift metrics, and per-class capacity balance.
+            </p>
+<!-- Specimen Readout Box -->
+<div class="bg-surface-container p-space-sm rounded-lg space-y-1 mb-space-md">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant font-medium">FOCUSED SPECIMEN:</span>
+<span class="font-mono text-primary font-bold">#EX-3094 (Plug Adapter, Cat 08)</span>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Fisher Sensitivity:</span>
+<span class="font-mono text-on-surface">0.892 (High Vulnerability)</span>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Retention Lifespan:</span>
+<span class="font-mono text-on-surface">64 Batches (Preserved)</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-space-xs text-secondary font-body-md text-body-md font-semibold hover:text-primary transition-colors" data-path="memory-landscape" href="#">
+<span>Explore Latent Clusters</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<span class="font-label-sm text-label-sm text-on-surface-variant">500 / 500 ACTIVE</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: Academic Citation & Reproducibility Banner -->
+<section class="w-full bg-surface-container py-space-xl">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin">
+<div class="bg-surface-container-lowest p-space-lg lg:p-space-xl rounded-xl shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- CLI Reproducibility Box -->
+<div class="lg:col-span-7 flex flex-col justify-between">
+<div>
+<div class="inline-flex items-center gap-space-xs font-label-sm text-label-sm font-semibold uppercase text-primary mb-space-xs">
+<span class="material-symbols-outlined text-[16px]">code</span>
+                CLI REPRODUCIBILITY HARNESS
+              </div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Execute Verification Run in One Command</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md">
+                Clone repository, establish PyTorch 2.2+ environment, and initiate deterministic training on the official CORe50 benchmark:
+              </p>
+<!-- Code Block -->
+<div class="bg-surface-container-high p-space-md rounded-lg font-mono text-[13px] text-primary relative group flex items-center justify-between overflow-x-auto shadow-inner">
+<code class="text-primary font-semibold select-all">python run.py --method memorycore --memory-budget 500 --scenario nicv2-79 --seed 42 --device cuda:0</code>
+<button class="ml-space-sm p-1.5 rounded bg-surface-container-lowest text-on-surface hover:text-primary transition-colors shrink-0 shadow-sm" onclick="navigator.clipboard.writeText('python run.py --method memorycore --memory-budget 500 --scenario nicv2-79 --seed 42 --device cuda:0')" title="Copy to clipboard">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="mt-space-md flex flex-wrap items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                FastAPI Host: <strong class="text-primary">http://127.0.0.1:8000</strong>
+</span>
+<span>•</span>
+<a class="hover:text-primary underline" href="#">Interactive Swagger API Documentation</a>
+<span>•</span>
+<span>Pre-Trained Checkpoints (248MB)</span>
+</div>
+</div>
+<!-- BibTeX Citation Block -->
+<div class="lg:col-span-5 bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-inner">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant">BIBTEX CITATION</span>
+<span class="font-label-sm text-label-sm text-primary font-mono">ICLR 2025 REF</span>
+</div>
+<pre class="font-mono text-[11px] leading-relaxed text-on-surface overflow-x-auto p-space-xs bg-surface-container-lowest rounded select-all shadow-sm">@inproceedings{memorycore2025,
+  title={Forgetting-Aware Adaptive Continual Learning},
+  author={Parisi, G. and Zenke, F. and MemoryCore Lab},
+  booktitle={Int. Conf. on Learning Representations},
+  year={2025},
+  eprint={2403.09118}
+}</pre>
+</div>
+<div class="mt-space-sm pt-space-xs text-on-surface-variant font-label-sm text-label-sm flex justify-between items-center">
+<span>Licensed under CC BY-NC-SA 4.0</span>
+<button class="text-primary font-semibold hover:underline" onclick="navigator.clipboard.writeText('@inproceedings{memorycore2025, title={Forgetting-Aware Adaptive Continual Learning}, author={Parisi, G. and Zenke, F. and MemoryCore Lab}, booktitle={ICLR}, year={2025}}')">Copy BibTeX</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 7: Call to Action Archival Closure -->
+<section class="w-full bg-background py-space-xl">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin text-center">
+<div class="max-w-2xl mx-auto flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold mb-space-xs">GET STARTED TODAY</span>
+<h2 class="font-display-lg text-display-lg text-primary tracking-tight mb-space-sm">Deploy MemoryCore on Your Continual Stream</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+          Whether you are evaluating non-stationary robotics vision or mitigating LLM fine-tuning alignment decay, MemoryCore provides mathematically sound retention guarantees.
+        </p>
+<div class="flex flex-wrap items-center justify-center gap-space-sm">
+<a class="inline-flex items-center gap-space-xs px-space-lg py-3 rounded-lg bg-primary-container text-on-primary font-body-md text-body-md font-medium hover:bg-primary transition-all shadow-md" data-path="control-center" href="#">
+<span>Launch Interactive Control Center</span>
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</a>
+<a class="inline-flex items-center gap-space-xs px-space-lg py-3 rounded-lg bg-surface-container text-on-surface font-body-md text-body-md font-medium hover:bg-surface-container-high transition-all" data-path="documentation" href="#">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+<span>Read Complete Documentation</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-low shadow-[0_-1px_6px_rgba(0,0,0,0.02)] mt-space-xl py-space-xl"><div class="max-w-7xl mx-auto px-margin-sm lg:px-margin"><div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg mb-space-lg"><div class="space-y-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface">Academic Citations</span><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Parisi et al., "Continual lifelong learning with neural networks: A review" (Neural Networks, 2019). Zenke et al., "Continual Learning Through Synaptic Intelligence" (ICML, 2017). Published by the MemoryCore Computational Laboratory.</p></div><div class="space-y-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface">CORe50 NIC-v2-79 Spec</span><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">50 domestic objects across 10 categories, 79 distinct batches under New Classes and Instances (NICv2). Evaluated at 128×128 native continuous video resolution with strict zero-replay constraints.</p></div><div class="space-y-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface">System Endpoints</span><div class="flex flex-col gap-space-xs"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">GET /api/v1/telemetry/a100</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">POST /api/v1/experiments/stream</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">GET /api/v1/metrics/nicv2-79</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">GET /docs (FastAPI OpenAPI)</a></div></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm"><p>© 2025 MEMORYCORE Continual Learning Laboratory. All benchmarks registered under MIT Open Science.</p><p class="font-label-sm text-label-sm uppercase tracking-wider">Architecture: Synaptic Plasticity Matrix v3.4.1</p></div></div></footer></body></html>

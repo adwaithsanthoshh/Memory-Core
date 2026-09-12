@@ -1,0 +1,8 @@
+# Quick smoke-test configuration for pipeline verification
+smoke_test:
+  enabled: true
+  num_tasks: 3
+  samples_per_task: 30
+  test_samples: 30
+  batch_size: 8
+  epochs_per_task: 1

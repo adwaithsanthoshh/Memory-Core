@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>MEMORYCORE — Continual Learning Lab | Split Tiny-ImageNet</title>
+  <meta name="description" content="MEMORYCORE: Research-grade continual learning system investigating catastrophic forgetting on Split Tiny-ImageNet with uncertainty-aware memory sampling."/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "garnet": "#650004", "garnet-dark": "#3e0001", "garnet-light": "#891d19",
+            "rose": "#8d4a56", "rose-soft": "#df8f9c", "rose-bg": "#ffd9de",
+            "page-bg": "#F7F4EB", "canvas": "#FAF4D4", "card-bg": "#FFFFFF",
+            "card-subtle": "#FCFAF4", "header-bg": "#F5EFE0",
+            "ink-primary": "#1E191A", "ink-secondary": "#5C5153", "ink-muted": "#7A6F72",
+            "border-soft": "#E4DDCF", "border-subtle": "#DACFBC",
+            "surface-container": "#f1eee6", "surface-container-low": "#f6f3eb",
+            "surface-container-high": "#ebe8e0", "surface-container-highest": "#e5e2db",
+            "error": "#ba1a1a", "error-container": "#ffdad6", "on-error-container": "#93000a"
+          },
+          fontFamily: {
+            "newsreader": ["Newsreader", "serif"],
+            "inter": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #F5EFE0; }
+    ::-webkit-scrollbar-thumb { background: #DACFBC; border-radius: 3px; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .nav-link.active { background: #650004 !important; color: #FAF4D4 !important; }
+    .strategy-card { cursor: pointer; transition: all 0.15s ease; }
+    .strategy-card.selected { background: #FFFDF6; border: 2px solid #650004 !important; }
+    .method-row:hover { background: #F4EEDC; }
+    .matrix-cell { cursor: pointer; transition: transform 0.1s ease; }
+    .matrix-cell:hover { transform: scale(1.15); z-index: 10; position: relative; }
+    .kpi-card { transition: box-shadow 0.2s ease; }
+    .kpi-card:hover { box-shadow: 0 4px 16px -2px rgba(30,26,27,0.08); }
+    .dot-grid { background-image: radial-gradient(#650004 1px, transparent 1px); background-size: 24px 24px; }
+    @keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .anim-pulse { animation: pulse-slow 2s ease-in-out infinite; }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .anim-spin { animation: spin-slow 60s linear infinite; }
+    input[type="range"] { accent-color: #650004; }
+  </style>
+</head>
+<body class="bg-page-bg font-inter text-ink-primary antialiased">
+
+<!-- HEADER -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-header-bg/95 backdrop-blur-xl border-b border-border-soft shadow-[0_1px_8px_rgba(42,23,27,0.06)]">
+  <div class="h-14 w-full px-6 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-6 shrink-0">
+      <div class="flex items-center gap-3">
+        <span class="font-newsreader text-xl tracking-tight text-garnet font-bold">MEMORYCORE</span>
+        <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-bg border border-[#FFB4AB]">
+          <span class="w-1.5 h-1.5 rounded-full bg-garnet anim-pulse"></span>
+          <span class="font-mono text-[10px] text-garnet uppercase tracking-widest font-semibold">CONTINUAL LEARNING LAB</span>
+        </div>
+      </div>
+      <nav class="hidden xl:flex items-center gap-1" id="mainNav">
+        <a class="nav-link px-3 py-1 font-mono text-xs text-ink-secondary hover:text-ink-primary rounded transition-colors" onclick="showPage('overview',this)" href="#">Overview</a>
+        <a class="nav-link px-3 py-1 font-mono text-xs text-ink-secondary hover:text-ink-primary rounded transition-colors" onclick="showPage('control',this)" href="#">Control Center</a>
+        <a class="nav-link active px-3 py-1 font-mono text-xs rounded" onclick="showPage('baselines',this)" href="#">Baselines</a>
+        <a class="nav-link px-3 py-1 font-mono text-xs text-ink-secondary hover:text-ink-primary rounded transition-colors" onclick="showPage('matrix',this)" href="#">Accuracy Matrix</a>
+        <a class="nav-link px-3 py-1 font-mono text-xs text-ink-secondary hover:text-ink-primary rounded transition-colors" onclick="showPage('memory',this)" href="#">Memory Budget</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-3 shrink-0">
+      <div class="hidden lg:flex items-center gap-2">
+        <div class="px-2 py-0.5 rounded bg-card-bg border border-border-soft font-mono text-[11px] text-garnet flex items-center gap-1 font-semibold" id="apiStatus">
+          <span class="w-1.5 h-1.5 rounded-full bg-garnet anim-pulse"></span>API: CHECKING
+        </div>
+        <div class="px-2 py-0.5 rounded bg-card-bg border border-border-soft font-mono text-[11px] text-ink-secondary">SEED: 42</div>
+        <div class="px-2 py-0.5 rounded bg-card-bg border border-border-soft font-mono text-[11px] text-ink-secondary">TINY-IMAGENET · 200 CLS</div>
+      </div>
+      <button onclick="showPage('control',document.querySelector('[data-page=control]'))" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-garnet text-[#FAF4D4] hover:bg-garnet-dark font-mono text-xs font-bold transition-colors shadow-sm">
+        <span class="material-symbols-outlined text-[15px]">play_arrow</span>New Run
+      </button>
+      <div class="w-8 h-8 rounded-full bg-garnet border border-garnet-light flex items-center justify-center shadow-sm">
+        <span class="material-symbols-outlined text-[#FAF4D4] text-[18px]">person</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE: OVERVIEW -->
+<div class="page pt-14" id="page-overview">
+  <div class="w-full bg-surface-container-high py-1.5 px-6 border-b border-border-soft">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-1 text-ink-muted font-mono text-[10px]">
+      <div class="flex items-center gap-3 flex-wrap">
+        <span class="w-1.5 h-1.5 rounded-full bg-garnet inline-block"></span>
+        <span class="tracking-widest uppercase font-semibold text-garnet">MONOGRAPH REF: TINY-2025-0912</span>
+        <span class="text-ink-muted">/</span>
+        <span>BENCHMARK: SPLIT TINY-IMAGENET · 20 TASKS · 200 CLASSES</span>
+        <span class="text-ink-muted">/</span>
+        <span>EVAL: TASK-IL PROTOCOL</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden md:inline text-ink-muted">HACKATHON: TRACK 5 — CONTINUAL LEARNING</span>
+        <span class="px-2 py-0.5 rounded bg-card-bg text-garnet font-mono font-medium border border-border-soft">RESNET-18 BACKBONE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="relative w-full overflow-hidden bg-page-bg py-12 lg:py-20">
+    <div class="absolute inset-0 pointer-events-none opacity-[0.03] dot-grid"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 flex flex-col items-start">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-surface-container-high text-garnet mb-5">
+            <span class="material-symbols-outlined text-[15px]">science</span>
+            <span class="font-mono text-[10px] tracking-widest uppercase font-medium">RESEARCH INITIATIVE // SPLIT TINY-IMAGENET · SEED: 42 · RESNET-18</span>
+          </div>
+          <h1 class="font-newsreader text-[48px] leading-[1.1] tracking-tight text-garnet mb-5">
+            Teach AI. <br/>
+            <span class="italic text-rose">Watch it forget.</span><br/>
+            Teach it to remember.
+          </h1>
+          <p class="font-inter text-base leading-relaxed text-ink-secondary max-w-2xl mb-6">
+            MEMORYCORE investigates catastrophic forgetting in deep neural networks under strict, fixed replay budgets. Evaluated on <strong class="text-ink-primary">Split Tiny-ImageNet</strong> across <strong class="text-ink-primary">20 sequential tasks</strong> (10 classes/task, 200 total), using <strong class="text-ink-primary">Uncertainty-Aware DER++ sampling</strong> to preserve decision boundaries across non-stationary visual distributions.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 mb-6">
+            <a onclick="showPage('baselines',document.querySelector('[data-page=baselines]'))" href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-garnet text-[#FAF4D4] font-inter text-sm font-semibold hover:bg-garnet-dark transition-all shadow-md">
+              <span>View Baseline Results</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </a>
+            <a onclick="showPage('matrix',document.querySelector('[data-page=matrix]'))" href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-card-bg text-ink-primary font-inter text-sm font-medium hover:bg-canvas transition-all shadow-sm border border-border-soft">
+              <span class="material-symbols-outlined text-[18px] text-rose">grid_view</span>
+              <span>Accuracy Matrix</span>
+            </a>
+          </div>
+          <div class="flex items-center gap-2 text-ink-muted font-mono text-xs">
+            <span class="material-symbols-outlined text-[16px] text-garnet">description</span>
+            <span>20 Tasks · 10 Classes/Task · 200 Total Classes · 64×64 RGB · ResNet-18 (8.7M params) · Task-IL Evaluation</span>
+          </div>
+        </div>
+        <!-- Visual -->
+        <div class="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
+          <div class="relative w-72 h-72 sm:w-80 sm:h-80 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full bg-canvas/60 shadow-xl"></div>
+            <div class="absolute inset-6 rounded-full bg-surface-container/70 shadow-sm"></div>
+            <div class="absolute inset-14 rounded-full bg-surface-container-high/60 shadow-inner flex items-center justify-center">
+              <svg class="w-full h-full text-rose-soft/40 anim-spin" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" fill="none" r="94" stroke="currentColor" stroke-dasharray="2, 6" stroke-width="1"></circle>
+                <circle cx="100" cy="100" fill="none" r="76" stroke="currentColor" stroke-dasharray="8, 12" stroke-width="0.75"></circle>
+              </svg>
+            </div>
+            <div class="relative z-10 w-32 h-32 rounded-full bg-card-bg shadow-xl flex flex-col items-center justify-center border border-border-soft">
+              <span class="font-newsreader text-4xl font-bold text-garnet">20</span>
+              <span class="font-mono text-[10px] tracking-widest text-ink-secondary uppercase">TASKS</span>
+              <span class="font-mono text-[10px] text-garnet font-bold mt-0.5">200 CLASSES</span>
+            </div>
+            <!-- Orbital labels -->
+            <div class="absolute -top-2 right-0 z-20 px-3 py-1.5 rounded-xl bg-card-bg shadow-md border border-border-soft">
+              <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                <span class="w-2 h-2 rounded-full bg-rose"></span>
+                <span class="font-semibold text-garnet">Uncertainty:</span><span>CE Loss Ranked</span>
+              </div>
+            </div>
+            <div class="absolute bottom-4 -left-4 z-20 px-3 py-1.5 rounded-xl bg-card-bg shadow-md border border-border-soft">
+              <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                <span class="w-2 h-2 rounded-full bg-garnet"></span>
+                <span class="font-semibold text-garnet">DER++:</span><span>Dark Knowledge</span>
+              </div>
+            </div>
+            <div class="absolute -bottom-4 right-6 z-20 px-3 py-1.5 rounded-xl bg-card-bg shadow-md border border-border-soft">
+              <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                <span class="w-2 h-2 rounded-full bg-garnet-light"></span>
+                <span class="font-semibold text-garnet">Eval:</span><span class="font-bold">Task-IL Protocol</span>
+              </div>
+            </div>
+            <div class="absolute left-0 right-0 top-1/2 h-px bg-border-soft/50 pointer-events-none"></div>
+            <div class="absolute top-0 bottom-0 left-1/2 w-px bg-border-soft/50 pointer-events-none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KPIs -->
+  <section class="w-full bg-canvas/60 border-y border-border-soft py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-3">
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-rose font-semibold">EMPIRICAL VALIDATION</span>
+          <h2 class="font-newsreader text-3xl tracking-tight text-ink-primary mt-0.5">Statistical Overview · Split Tiny-ImageNet</h2>
+        </div>
+        <p class="font-inter text-xs text-ink-secondary max-w-md">ResNet-18 backbone evaluated at each task boundary under Task-IL protocol. Predictions restricted to task-specific class set for fair measurement.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="kpi-card bg-card-bg p-6 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-garnet"></div>
+          <div>
+            <div class="flex items-center justify-between mb-3"><span class="font-mono text-[10px] text-ink-muted tracking-wider uppercase">METRIC // ACC_F</span><span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-garnet font-semibold" id="kpi-acc-badge">BEST METHOD</span></div>
+            <div class="font-newsreader text-garnet text-[44px] leading-none mb-1 font-semibold" id="kpi-acc">—</div>
+            <div class="font-newsreader text-xl font-semibold text-ink-primary">Final Avg Accuracy</div>
+          </div>
+          <p class="font-inter text-xs text-ink-secondary mt-4">Best across all methods after completing all 20 sequential tasks on Tiny-ImageNet.</p>
+        </div>
+        <div class="kpi-card bg-card-bg p-6 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-rose"></div>
+          <div>
+            <div class="flex items-center justify-between mb-3"><span class="font-mono text-[10px] text-ink-muted tracking-wider uppercase">METRIC // F_AVG</span><span class="inline-flex items-center px-2 py-0.5 rounded bg-rose-bg text-rose font-mono text-[10px] font-semibold" id="kpi-forget-badge">LOWEST</span></div>
+            <div class="font-newsreader text-rose text-[44px] leading-none mb-1 font-semibold" id="kpi-forget">—</div>
+            <div class="font-newsreader text-xl font-semibold text-ink-primary">Average Forgetting</div>
+          </div>
+          <p class="font-inter text-xs text-ink-secondary mt-4">MemoryCore's uncertainty curation dramatically reduces forgetting vs random replay baselines.</p>
+        </div>
+        <div class="kpi-card bg-card-bg p-6 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-garnet-light"></div>
+          <div>
+            <div class="flex items-center justify-between mb-3"><span class="font-mono text-[10px] text-ink-muted tracking-wider uppercase">METRIC // BWT</span><span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-secondary font-semibold">STABLE</span></div>
+            <div class="font-newsreader text-garnet-light text-[44px] leading-none mb-1 font-semibold" id="kpi-bwt">—</div>
+            <div class="font-newsreader text-xl font-semibold text-ink-primary">Backward Transfer</div>
+          </div>
+          <p class="font-inter text-xs text-ink-secondary mt-4">Negative BWT = degradation on prior tasks after subsequent learning. Near-zero = stable retention.</p>
+        </div>
+        <div class="kpi-card bg-card-bg p-6 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-ink-muted"></div>
+          <div>
+            <div class="flex items-center justify-between mb-3"><span class="font-mono text-[10px] text-ink-muted tracking-wider uppercase">METHODS EVALUATED</span><span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-secondary font-semibold">BENCHMARKED</span></div>
+            <div class="font-newsreader text-ink-primary text-[44px] leading-none mb-1 font-semibold" id="kpi-methods">6</div>
+            <div class="font-newsreader text-xl font-semibold text-ink-primary">Methods Benchmarked</div>
+          </div>
+          <p class="font-inter text-xs text-ink-secondary mt-4">Naive · Joint · Replay · EWC · LwF · MemoryCore (DER++ + Uncertainty Sampling).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Algorithm pipeline -->
+  <section class="w-full bg-page-bg py-12 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="max-w-3xl mb-10">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-garnet font-semibold">ALGORITHMIC MECHANICS</span>
+        <h2 class="font-newsreader text-[48px] leading-[1.1] text-garnet tracking-tight mt-1">The Uncertainty-Aware DER++ Pipeline</h2>
+        <p class="font-inter text-base text-ink-secondary mt-3 leading-relaxed">Instead of uniform random sampling, MEMORYCORE evaluates every image's Cross-Entropy loss and selects the hardest decision boundary cases, combining this with Dark Experience Replay (logit preservation) for maximum knowledge retention.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+        <div class="bg-card-bg p-4 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between hover:shadow-md transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[11px] font-bold text-garnet px-2 py-0.5 rounded bg-surface-container-high">PHASE 01</span>
+              <span class="material-symbols-outlined text-rose text-[20px]">stream</span>
+            </div>
+            <h3 class="font-newsreader text-[20px] font-semibold text-ink-primary group-hover:text-garnet transition-colors">Task Arrival</h3>
+            <p class="font-inter text-xs text-ink-secondary mt-1 leading-relaxed">Sequential 64×64 RGB images from Split Tiny-ImageNet. 10 new classes per task, 20 total tasks (200 classes).</p>
+          </div>
+          <div class="mt-4 p-2 bg-surface-container-low rounded font-mono text-[11px] text-garnet">DIM: [B, 3, 64, 64]</div>
+        </div>
+        <div class="bg-card-bg p-4 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between hover:shadow-md transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[11px] font-bold text-garnet px-2 py-0.5 rounded bg-surface-container-high">PHASE 02</span>
+              <span class="material-symbols-outlined text-rose text-[20px]">analytics</span>
+            </div>
+            <h3 class="font-newsreader text-[20px] font-semibold text-ink-primary group-hover:text-garnet transition-colors">Uncertainty Scoring</h3>
+            <p class="font-inter text-xs text-ink-secondary mt-1 leading-relaxed">Full forward pass over all task training images. Cross-Entropy loss computed per sample to measure prediction difficulty.</p>
+          </div>
+          <div class="mt-4 p-2 bg-surface-container-low rounded font-mono text-[11px] text-garnet">L_CE(x_i, y_i)</div>
+        </div>
+        <div class="bg-card-bg p-4 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between hover:shadow-md transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[11px] font-bold text-garnet px-2 py-0.5 rounded bg-surface-container-high">PHASE 03</span>
+              <span class="material-symbols-outlined text-rose text-[20px]">sort</span>
+            </div>
+            <h3 class="font-newsreader text-[20px] font-semibold text-ink-primary group-hover:text-garnet transition-colors">Selective Curation</h3>
+            <p class="font-inter text-xs text-ink-secondary mt-1 leading-relaxed">Images ranked by loss descending. Top-K hardest boundary cases selected — not random. Only the most at-risk memories are kept.</p>
+          </div>
+          <div class="mt-4 p-2 bg-surface-container-low rounded font-mono text-[11px] text-garnet">argsort(L_CE)[::-1][:K]</div>
+        </div>
+        <div class="bg-card-bg p-4 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between hover:shadow-md transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[11px] font-bold text-garnet px-2 py-0.5 rounded bg-surface-container-high">PHASE 04</span>
+              <span class="material-symbols-outlined text-rose text-[20px]">inventory_2</span>
+            </div>
+            <h3 class="font-newsreader text-[20px] font-semibold text-ink-primary group-hover:text-garnet transition-colors">Logit Storage</h3>
+            <p class="font-inter text-xs text-ink-secondary mt-1 leading-relaxed">Selected images stored with raw output logits ("dark knowledge") — the exact model confidence before forgetting begins.</p>
+          </div>
+          <div class="mt-4 p-2 bg-surface-container-low rounded font-mono text-[11px] text-garnet">Buffer: (x_i, y_i, z_i)</div>
+        </div>
+        <div class="bg-card-bg p-4 rounded-xl shadow-sm border border-border-soft flex flex-col justify-between hover:shadow-md transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[11px] font-bold text-garnet px-2 py-0.5 rounded bg-surface-container-high">PHASE 05</span>
+              <span class="material-symbols-outlined text-rose text-[20px]">psychology</span>
+            </div>
+            <h3 class="font-newsreader text-[20px] font-semibold text-ink-primary group-hover:text-garnet transition-colors">DER++ Replay</h3>
+            <p class="font-inter text-xs text-ink-secondary mt-1 leading-relaxed">Dual-objective gradient update: MSE distillation loss on stored logits + CE replay loss. Prevents catastrophic parameter overwriting.</p>
+          </div>
+          <div class="mt-4 p-2 bg-surface-container-low rounded font-mono text-[11px] text-garnet">α·MSE(z,z') + β·CE(y)</div>
+        </div>
+      </div>
+      <!-- Math card -->
+      <div class="mt-6 bg-card-bg p-6 rounded-xl shadow-sm border border-border-soft">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8">
+            <span class="font-mono text-[10px] tracking-wider uppercase text-rose font-semibold">DER++ LOSS FORMULATION</span>
+            <h4 class="font-newsreader text-xl font-semibold text-garnet mt-1 mb-2">Uncertainty-Weighted Continual Optimization</h4>
+            <p class="font-inter text-sm text-ink-secondary leading-relaxed">By storing the highest-loss exemplars (boundary cases where the model is most uncertain), the fixed memory budget is used maximally efficiently — capturing exactly the decision boundaries most vulnerable to catastrophic overwriting during subsequent task training.</p>
+          </div>
+          <div class="lg:col-span-4 bg-surface-container p-4 rounded-lg font-mono text-sm text-garnet flex flex-col gap-1 shadow-inner border border-border-soft">
+            <span class="font-mono text-[10px] text-ink-muted uppercase font-semibold">TOTAL LOSS (α=0.5, β=1.0)</span>
+            <div class="text-xs tracking-tight overflow-x-auto py-1">L = L_curr + α·MSE(f(x_m;θ), z_m) + β·CE(f(x_m;θ), y_m)</div>
+            <span class="font-mono text-[10px] text-ink-muted">Memory budget M=2000 · 20 tasks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: CONTROL CENTER -->
+<div class="page pt-14" id="page-control">
+  <section class="w-full px-6 pt-4 pb-3 border-b border-border-soft">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-1 pb-2">
+      <div class="flex items-center gap-3 font-mono text-[10px] text-ink-secondary tracking-wider">
+        <span class="text-garnet font-semibold">EXPERIMENT DISPATCH PIPELINE</span>
+        <span class="text-ink-muted">/</span><span>FASTAPI DISPATCHER</span>
+        <span class="text-ink-muted">/</span><span class="text-ink-primary font-medium">SPLIT TINY-IMAGENET · 20 TASKS</span>
+      </div>
+      <div class="flex items-center gap-4 font-mono text-[10px] text-ink-secondary">
+        <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-bg border border-rose"></span>ENDPOINT: /api/train</span>
+        <span class="text-garnet font-semibold" id="apiUrlLabel">API: localhost:8000</span>
+      </div>
+    </div>
+  </section>
+  <section class="w-full px-6 py-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        <div class="space-y-1 max-w-3xl">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-rose-bg/40 text-rose font-mono text-[10px] uppercase font-semibold">Dispatch Deck · Module 02</span>
+          </div>
+          <h1 class="font-newsreader text-3xl text-garnet tracking-tight">Experiment Control Center</h1>
+          <p class="font-inter text-sm text-ink-secondary leading-relaxed">Configure continual learning strategies, calibrate memory budgets, and dispatch to the local FastAPI engine. Parameterized across 20 non-i.i.d. Tiny-ImageNet task distributions.</p>
+        </div>
+        <div class="p-3 rounded-lg bg-surface-container-low shadow-sm flex flex-col gap-1 min-w-[250px] border border-border-soft">
+          <div class="flex items-center justify-between font-mono text-[10px]">
+            <span class="text-ink-muted uppercase tracking-wider">Node Status</span>
+            <span class="flex items-center gap-1.5 text-ink-primary font-medium"><span class="w-2 h-2 rounded-full bg-garnet anim-pulse"></span>IDLE · READY</span>
+          </div>
+          <div class="font-mono text-[11px] text-garnet font-semibold">Local GPU · ResNet-18 Backbone</div>
+          <div class="flex items-center justify-between text-[10px] text-ink-muted border-t border-border-soft/60 pt-1 mt-0.5 font-mono">
+            <span>DATASET: 200 Classes · 20 Tasks</span><span>PyTorch + CUDA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="w-full px-6 pb-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-12 gap-6">
+      <!-- Left: Strategy + Hyperparams -->
+      <div class="xl:col-span-8 flex flex-col gap-6">
+        <div class="bg-card-bg rounded-xl p-6 shadow-sm border border-border-soft">
+          <div class="flex items-center justify-between pb-3 border-b border-border-soft">
+            <div>
+              <span class="font-mono text-[10px] uppercase text-rose font-semibold tracking-wider">Architecture Selection</span>
+              <h2 class="font-newsreader text-xl font-semibold text-garnet">1. Continual Learning Strategy</h2>
+            </div>
+            <span class="font-mono text-[10px] text-ink-muted">Select 1 of 6</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4" id="strategyGrid">
+            <div class="strategy-card selected p-4 rounded-xl border border-border-soft" data-strategy="memorycore" onclick="selectStrategy(this)">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-5 h-5 rounded-full bg-garnet flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-[#FAF4D4]">check</span></div>
+                  <h3 class="font-newsreader text-[17px] text-garnet font-bold">MemoryCore (DER++)</h3>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-garnet text-[#FAF4D4] font-mono text-[10px] font-bold uppercase">Proposed</span>
+              </div>
+              <p class="font-inter text-xs text-ink-secondary mb-3 leading-relaxed">Uncertainty-Aware replay — selects hardest boundary samples by CE loss + Dark Experience Replay with logit distillation (α=0.5, β=1.0).</p>
+              <div class="flex items-center justify-between pt-2 border-t border-border-soft font-mono text-[10px]">
+                <span class="text-ink-muted">Buffer: <strong class="text-garnet">M = 2000</strong></span>
+                <span class="text-rose font-semibold">α=0.5 · β=1.0</span>
+              </div>
+            </div>
+            <div class="strategy-card p-4 rounded-xl border border-border-soft bg-card-subtle" data-strategy="naive" onclick="selectStrategy(this)">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-transparent"><span class="material-symbols-outlined text-[12px]">check</span></div><h3 class="font-newsreader text-[17px] text-ink-primary font-medium">Naive Sequential</h3></div>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-muted">Lower Bound</span>
+              </div>
+              <p class="font-inter text-xs text-ink-secondary mb-3 leading-relaxed">Standard fine-tuning without replay or regularization. Maximum catastrophic forgetting. Mandatory reference point.</p>
+              <div class="flex items-center justify-between pt-2 border-t border-border-soft font-mono text-[10px]"><span class="text-ink-muted">Buffer: <strong class="text-ink-primary">None (M=0)</strong></span><span class="text-error">Max Forgetting</span></div>
+            </div>
+            <div class="strategy-card p-4 rounded-xl border border-border-soft bg-card-subtle" data-strategy="replay" onclick="selectStrategy(this)">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-transparent"><span class="material-symbols-outlined text-[12px]">check</span></div><h3 class="font-newsreader text-[17px] text-ink-primary font-medium">Random Replay (ER)</h3></div>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-muted">Uniform Replay</span>
+              </div>
+              <p class="font-inter text-xs text-ink-secondary mb-3 leading-relaxed">Uniform reservoir sampling. Strong baseline — but no preference for hard or boundary cases unlike MemoryCore.</p>
+              <div class="flex items-center justify-between pt-2 border-t border-border-soft font-mono text-[10px]"><span class="text-ink-muted">Buffer: <strong class="text-ink-primary">M Exemplars</strong></span><span class="text-ink-muted">Random</span></div>
+            </div>
+            <div class="strategy-card p-4 rounded-xl border border-border-soft bg-card-subtle" data-strategy="ewc" onclick="selectStrategy(this)">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-transparent"><span class="material-symbols-outlined text-[12px]">check</span></div><h3 class="font-newsreader text-[17px] text-ink-primary font-medium">EWC (Kirkpatrick)</h3></div>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-muted">Regularization</span>
+              </div>
+              <p class="font-inter text-xs text-ink-secondary mb-3 leading-relaxed">Fisher Information diagonal penalty to protect weights critical to previous tasks. Zero memory buffer required.</p>
+              <div class="flex items-center justify-between pt-2 border-t border-border-soft font-mono text-[10px]"><span class="text-ink-muted">Penalty: <strong class="text-ink-primary">λ = 100.0</strong></span><span class="text-ink-muted">Zero-Buffer</span></div>
+            </div>
+            <div class="strategy-card p-4 rounded-xl border border-border-soft bg-card-subtle" data-strategy="lwf" onclick="selectStrategy(this)">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-transparent"><span class="material-symbols-outlined text-[12px]">check</span></div><h3 class="font-newsreader text-[17px] text-ink-primary font-medium">LwF (Li & Hoiem)</h3></div>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-muted">Distillation</span>
+              </div>
+              <p class="font-inter text-xs text-ink-secondary mb-3 leading-relaxed">Knowledge distillation from frozen prior model snapshot. Logit alignment without storing any raw exemplars.</p>
+              <div class="flex items-center justify-between pt-2 border-t border-border-soft font-mono text-[10px]"><span class="text-ink-muted">Temp: <strong class="text-ink-primary">T = 2.0</strong></span><span class="text-ink-muted">Zero-Buffer</span></div>
+            </div>
+            <div class="strategy-card p-4 rounded-xl border border-border-soft bg-card-subtle" data-strategy="joint" onclick="selectStrategy(this)">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-transparent"><span class="material-symbols-outlined text-[12px]">check</span></div><h3 class="font-newsreader text-[17px] text-ink-primary font-medium">Joint Training</h3></div>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-mono text-[10px] text-ink-muted">Upper Bound</span>
+              </div>
+              <p class="font-inter text-xs text-ink-secondary mb-3 leading-relaxed">Theoretical ceiling — trains simultaneously on all 20 tasks in i.i.d. shuffle. Non-continual reference oracle.</p>
+              <div class="flex items-center justify-between pt-2 border-t border-border-soft font-mono text-[10px]"><span class="text-ink-muted">Storage: <strong class="text-ink-primary">100% Dataset</strong></span><span class="text-garnet font-semibold">Oracle</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Hyperparams -->
+        <div class="bg-card-bg rounded-xl p-6 shadow-sm border border-border-soft">
+          <div class="flex items-center justify-between pb-3 border-b border-border-soft">
+            <div><span class="font-mono text-[10px] uppercase text-rose font-semibold tracking-wider">Calibration Deck</span><h2 class="font-newsreader text-xl font-semibold text-garnet">2. Hyperparameters</h2></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+            <div class="space-y-1.5 md:col-span-2 p-4 rounded-lg bg-surface-container-low border border-border-soft" id="replayBufferContainer">
+              <div class="flex items-center justify-between">
+                <div><label class="block font-mono text-[11px] text-garnet font-bold uppercase tracking-wider flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-garnet">memory</span>Exemplar Buffer Capacity (M)</label><span class="font-inter text-xs text-ink-muted">Fixed memory limit for MemoryCore & Replay buffers</span></div>
+                <div class="flex items-center gap-2"><span class="px-3 py-1 bg-card-bg rounded border border-border-soft text-garnet font-mono text-sm font-bold" id="bufferDisplay">2000 exemplars</span></div>
+              </div>
+              <div class="pt-2">
+                <input class="w-full cursor-pointer" id="bufferSlider" max="5000" min="50" step="50" type="range" value="2000" oninput="updateBuffer(this.value)"/>
+                <div class="flex justify-between items-center pt-2 font-mono text-[10px] text-ink-muted">
+                  <button class="px-2 py-0.5 rounded bg-card-bg hover:bg-surface-container text-ink-primary border border-border-soft" onclick="setBuffer(250)">250</button>
+                  <button class="px-2 py-0.5 rounded bg-card-bg hover:bg-surface-container text-ink-primary border border-border-soft" onclick="setBuffer(500)">500</button>
+                  <button class="px-2 py-0.5 rounded bg-card-bg hover:bg-surface-container text-ink-primary border border-border-soft" onclick="setBuffer(1000)">1000</button>
+                  <button class="px-2 py-0.5 rounded bg-garnet text-[#FAF4D4] border border-garnet font-bold" onclick="setBuffer(2000)">2000 (Default)</button>
+                  <button class="px-2 py-0.5 rounded bg-card-bg hover:bg-surface-container text-ink-primary border border-border-soft" onclick="setBuffer(5000)">5000</button>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-mono text-[10px] text-ink-muted uppercase tracking-wider">Batch Size</label>
+              <div class="grid grid-cols-3 gap-2">
+                <button class="batch-btn h-11 rounded-lg bg-surface-container-low text-ink-primary font-mono text-sm hover:bg-surface-container transition-colors border border-border-soft" onclick="selectBatch(this,16)">16</button>
+                <button class="batch-btn h-11 rounded-lg bg-garnet text-[#FAF4D4] font-mono text-sm font-bold border border-garnet" onclick="selectBatch(this,32)">32 (Default)</button>
+                <button class="batch-btn h-11 rounded-lg bg-surface-container-low text-ink-primary font-mono text-sm hover:bg-surface-container transition-colors border border-border-soft" onclick="selectBatch(this,64)">64</button>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between"><label class="block font-mono text-[10px] text-ink-muted uppercase tracking-wider">Learning Rate</label><span class="font-mono text-[10px] text-rose">AdamW (w.d.=0.0001)</span></div>
+              <div class="flex items-center gap-2">
+                <input class="w-full h-11 px-3 bg-surface-container-low text-ink-primary font-mono text-sm rounded-lg border border-border-soft focus:outline-none focus:ring-1 focus:ring-garnet" id="lrInput" step="0.0001" type="number" value="0.0005" oninput="updatePayload()"/>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-mono text-[10px] text-ink-muted uppercase tracking-wider">Epochs per Task</label>
+              <div class="h-11 px-3 bg-surface-container-low rounded-lg flex items-center justify-between text-ink-primary font-mono text-sm border border-border-soft"><span>Passes over task:</span><span class="font-bold text-garnet">5 Epochs</span></div>
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-mono text-[10px] text-ink-muted uppercase tracking-wider">EWC Lambda (λ)</label>
+              <input class="w-full h-11 px-3 bg-surface-container-low text-ink-primary font-mono text-sm rounded-lg border border-border-soft focus:outline-none focus:ring-1 focus:ring-garnet" id="regInput" step="10" type="number" value="100.0" oninput="updatePayload()"/>
+            </div>
+            <div class="md:col-span-2 p-3 rounded-lg bg-surface-container flex items-start gap-3 border border-border-soft">
+              <input checked class="w-4 h-4 mt-0.5 rounded cursor-not-allowed" disabled type="checkbox" style="accent-color:#650004"/>
+              <div class="space-y-0.5"><div class="flex items-center gap-2"><span class="font-newsreader text-[15px] text-ink-primary font-semibold">Strict Benchmark Integrity: Quarantined Val Set</span><span class="px-1.5 py-0.5 rounded bg-rose-bg text-rose font-mono text-[10px]">LOCKED</span></div><p class="font-inter text-xs text-ink-muted">Official Tiny-ImageNet val set strictly held out for evaluation. No val images enter training or replay buffers.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Dispatcher -->
+      <div class="xl:col-span-4 flex flex-col gap-6">
+        <div class="bg-card-bg rounded-xl p-6 shadow-sm border border-border-soft flex flex-col">
+          <div class="flex items-center justify-between pb-3 border-b border-border-soft">
+            <div><span class="font-mono text-[10px] uppercase text-rose font-semibold tracking-wider">CLI Dispatch</span><h2 class="font-newsreader text-xl font-semibold text-garnet">Run Command</h2></div>
+            <div class="flex items-center gap-1 font-mono text-[10px] text-ink-muted"><span class="w-2 h-2 rounded-full bg-rose-bg border border-rose"></span>SHELL</div>
+          </div>
+          <div class="flex items-center gap-1 pt-3 pb-1 font-mono text-[11px]">
+            <button class="px-3 py-1 rounded bg-surface-container text-garnet font-bold border border-border-soft" id="tabCli" onclick="showTab('cli')">CLI Command</button>
+            <button class="px-3 py-1 rounded hover:bg-surface-container text-ink-muted" id="tabJson" onclick="showTab('json')">HTTP Body</button>
+            <button class="ml-auto flex items-center gap-1 text-[10px] text-ink-muted hover:text-garnet" onclick="copyPayload()"><span class="material-symbols-outlined text-[14px]">content_copy</span>Copy</button>
+          </div>
+          <div class="relative mt-1 rounded-lg bg-surface-container-high p-4 font-mono text-[11px] text-ink-primary overflow-x-auto border border-border-soft min-h-[130px]">
+            <div class="text-[10px] text-ink-muted pb-2 mb-2 border-b border-border-subtle flex items-center justify-between"><span id="cliLabel">Terminal · PowerShell</span><span>127.0.0.1:8000</span></div>
+            <pre class="text-ink-primary font-mono text-[11px] leading-relaxed overflow-x-auto" id="payloadPreview">python run.py \
+  --method memorycore \
+  --memory-budget 2000</pre>
+            <pre class="hidden text-ink-primary font-mono text-[11px] leading-relaxed overflow-x-auto" id="jsonPreview">{}</pre>
+          </div>
+          <div class="py-4 space-y-2">
+            <div class="flex items-center justify-between text-xs font-inter text-ink-muted"><span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-garnet">check_circle</span>Tiny-ImageNet Dataset</span><span class="font-mono text-[10px] text-ink-primary font-medium">Downloaded ✓</span></div>
+            <div class="flex items-center justify-between text-xs font-inter text-ink-muted"><span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-garnet">check_circle</span>Task-IL Evaluator</span><span class="font-mono text-[10px] text-ink-primary font-medium">Active ✓</span></div>
+            <div class="flex items-center justify-between text-xs font-inter text-ink-muted"><span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-garnet">check_circle</span>Uncertainty Sampling</span><span class="font-mono text-[10px] text-ink-primary font-medium">Enabled ✓</span></div>
+          </div>
+          <div class="pt-1 space-y-2">
+            <a onclick="showPage('baselines', document.querySelector('[data-page=baselines]'))" href="#" class="w-full py-3 px-4 rounded-lg bg-garnet hover:bg-garnet-dark text-[#FAF4D4] font-inter text-sm font-bold text-center flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]">
+              <span class="material-symbols-outlined text-[20px]">bar_chart</span><span>View Current Results</span>
+            </a>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button class="py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-ink-primary font-mono text-[10px] flex items-center justify-center gap-1 border border-border-soft"><span class="material-symbols-outlined text-[15px] text-outline">speed</span>Smoke Test</button>
+              <button onclick="updatePayload()" class="py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-ink-primary font-mono text-[10px] flex items-center justify-center gap-1 border border-border-soft"><span class="material-symbols-outlined text-[15px] text-outline">restart_alt</span>Refresh</button>
+            </div>
+          </div>
+        </div>
+        <div class="bg-card-bg rounded-xl p-6 shadow-sm border border-border-soft flex flex-col">
+          <div class="flex items-center justify-between pb-3 border-b border-border-soft">
+            <div><span class="font-mono text-[10px] uppercase text-rose font-semibold tracking-wider">Execution Log</span><h2 class="font-newsreader text-[18px] text-garnet font-semibold">Recent Benchmark Runs</h2></div>
+            <a onclick="showPage('baselines', document.querySelector('[data-page=baselines]'))" href="#" class="font-mono text-[10px] text-garnet hover:underline">View All →</a>
+          </div>
+          <div class="divide-y divide-border-soft pt-2" id="recentRuns"><div class="py-3 text-ink-muted font-mono text-[10px]">Loading runs...</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: BASELINES -->
+<div class="page active pt-14" id="page-baselines">
+  <section class="w-full bg-canvas/80 border-b border-border-soft px-4 sm:px-8 py-6">
+    <div class="max-w-7xl mx-auto flex flex-col gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <span class="text-ink-muted">EXPERIMENTS</span><span class="text-rose/60">/</span>
+          <span class="text-ink-muted">SPLIT-TINY-IMAGENET</span><span class="text-rose/60">/</span>
+          <span class="text-garnet font-semibold">20-TASK BENCHMARK</span>
+          <span class="ml-2 px-2.5 py-0.5 rounded-full bg-rose-bg border border-[#FFB4AB] text-garnet text-[10px] font-bold tracking-wider flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-garnet anim-pulse"></span>LIVE RESULTS
+          </span>
+        </div>
+        <div class="flex items-center gap-2"><span class="font-mono text-xs text-ink-muted">EVAL: TASK-IL PROTOCOL</span><span class="text-border-subtle">•</span><span class="font-mono text-xs text-ink-primary font-medium">CHECKPOINT: FINAL</span></div>
+      </div>
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        <div class="flex flex-col gap-1 max-w-4xl">
+          <div class="font-mono text-xs tracking-widest text-garnet font-bold uppercase">COMPARATIVE EVALUATION REPORT</div>
+          <h1 class="font-newsreader text-3xl md:text-4xl text-ink-primary font-bold tracking-tight">MemoryCore <span class="font-normal italic text-ink-secondary">(Uncertainty-Aware DER++)</span></h1>
+          <p class="font-inter text-sm text-ink-secondary mt-1 leading-relaxed">Empirical evaluation on <span class="text-ink-primary font-semibold">Split Tiny-ImageNet</span> with <span class="text-ink-primary font-semibold">ResNet-18</span>. Task-IL protocol: predictions restricted to each task's 10-class set for fair retention measurement.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <button onclick="loadAllResults()" class="px-3.5 py-2 rounded bg-card-bg hover:bg-canvas text-ink-primary border border-border-subtle font-mono text-xs font-medium flex items-center gap-1.5 shadow-sm"><span class="material-symbols-outlined text-[16px] text-garnet">refresh</span>REFRESH DATA</button>
+          <button onclick="showPage('control',document.querySelector('[data-page=control]'))" class="px-4 py-2 rounded bg-garnet hover:bg-garnet-dark text-[#FAF4D4] font-mono text-xs font-bold flex items-center gap-1.5 shadow-md"><span class="material-symbols-outlined text-[16px]">play_circle</span>NEW EXPERIMENT</button>
+        </div>
+      </div>
+      <!-- KPI ribbon -->
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mt-2">
+        <div class="p-3 bg-card-bg rounded border border-border-soft shadow-sm flex flex-col gap-0.5"><div class="font-mono text-[10px] text-ink-muted flex items-center justify-between"><span>FINAL ACC (A_T)</span><span class="material-symbols-outlined text-[14px] text-garnet">analytics</span></div><div class="font-newsreader text-[1.6rem] font-bold text-ink-primary tracking-tight" id="ribbon-acc">—</div><div class="font-mono text-[10px] text-garnet font-semibold">MemoryCore Best</div></div>
+        <div class="p-3 bg-card-bg rounded border border-border-soft shadow-sm flex flex-col gap-0.5"><div class="font-mono text-[10px] text-ink-muted flex items-center justify-between"><span>AVG FORGETTING</span><span class="material-symbols-outlined text-[14px] text-garnet">trending_down</span></div><div class="font-newsreader text-[1.6rem] font-bold text-ink-primary tracking-tight" id="ribbon-forget">—</div><div class="font-mono text-[10px] text-ink-muted">Naive: highest</div></div>
+        <div class="p-3 bg-card-bg rounded border border-border-soft shadow-sm flex flex-col gap-0.5"><div class="font-mono text-[10px] text-ink-muted flex items-center justify-between"><span>BWT</span><span class="material-symbols-outlined text-[14px] text-garnet">history</span></div><div class="font-newsreader text-[1.6rem] font-bold text-ink-primary tracking-tight" id="ribbon-bwt">—</div><div class="font-mono text-[10px] text-garnet font-medium">Low interference</div></div>
+        <div class="p-3 bg-card-bg rounded border border-border-soft shadow-sm flex flex-col gap-0.5"><div class="font-mono text-[10px] text-ink-muted flex items-center justify-between"><span>MEMORY BUDGET</span><span class="material-symbols-outlined text-[14px] text-garnet">inventory_2</span></div><div class="font-newsreader text-[1.6rem] font-bold text-ink-primary tracking-tight" id="ribbon-mem">2000 <span class="text-xs font-normal text-ink-muted">Ex</span></div><div class="font-mono text-[10px] text-ink-muted">100 ex / task</div></div>
+        <div class="p-3 bg-card-bg rounded border border-border-soft shadow-sm flex flex-col gap-0.5"><div class="font-mono text-[10px] text-ink-muted flex items-center justify-between"><span>TASKS</span><span class="material-symbols-outlined text-[14px] text-garnet">done_all</span></div><div class="font-newsreader text-[1.6rem] font-bold text-ink-primary tracking-tight" id="ribbon-tasks">— / 20</div><div class="font-mono text-[10px] text-ink-muted">Split Tiny-ImageNet</div></div>
+        <div class="p-3 bg-card-bg rounded border border-border-soft shadow-sm flex flex-col gap-0.5"><div class="font-mono text-[10px] text-ink-muted flex items-center justify-between"><span>TRAIN TIME</span><span class="material-symbols-outlined text-[14px] text-garnet">schedule</span></div><div class="font-newsreader text-[1.6rem] font-bold text-ink-primary tracking-tight" id="ribbon-time">—</div><div class="font-mono text-[10px] text-ink-muted">MemoryCore run</div></div>
+      </div>
+    </div>
+  </section>
+  <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 flex flex-col gap-10">
+    <!-- Chart -->
+    <div class="flex flex-col gap-4 bg-card-bg border border-border-soft p-4 md:p-6 rounded shadow-sm">
+      <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div class="flex flex-col gap-1 max-w-3xl">
+          <h2 class="font-newsreader text-2xl text-ink-primary font-bold">Performance Comparison — All Methods</h2>
+          <p class="font-inter text-xs text-ink-secondary leading-relaxed">Final Average Accuracy vs Average Forgetting. Lower forgetting + higher accuracy = better continual learner. MemoryCore (garnet) should dominate.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 self-start xl:self-center">
+          <span class="px-2 py-0.5 rounded bg-canvas border border-border-soft font-mono text-[10px] text-garnet font-bold">20 TASKS · 200 CLASSES</span>
+          <span class="px-2 py-0.5 rounded bg-canvas border border-border-soft font-mono text-[10px] text-ink-secondary">TASK-IL · RESNET-18</span>
+        </div>
+      </div>
+      <div class="relative h-72"><canvas id="comparisonChart"></canvas></div>
+    </div>
+    <!-- Table -->
+    <div class="flex flex-col gap-4 bg-card-bg border border-border-soft p-4 md:p-6 rounded shadow-sm">
+      <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-garnet font-semibold">LIFELONG BENCHMARKING</span>
+          <h2 class="font-newsreader text-2xl text-ink-primary font-bold mt-0.5">Official Scientific Comparison Table</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-1 rounded bg-surface-container-high text-ink-secondary font-mono text-[10px] uppercase border border-border-soft">20 TASKS</span>
+          <span class="px-2 py-1 rounded bg-surface-container-high text-ink-secondary font-mono text-[10px] uppercase border border-border-soft">200 CLASSES</span>
+          <span class="px-2 py-1 rounded bg-surface-container-high text-ink-secondary font-mono text-[10px] uppercase border border-border-soft">TASK-IL EVAL</span>
+        </div>
+      </div>
+      <div class="bg-card-bg rounded-xl shadow-sm overflow-hidden border border-border-soft">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead><tr class="bg-surface-container text-ink-secondary font-mono text-[10px] uppercase tracking-wider">
+              <th class="py-4 px-6">Method & Paradigm</th>
+              <th class="py-4 px-4">Type</th>
+              <th class="py-4 px-4">Memory Budget</th>
+              <th class="py-4 px-4">Final Acc (ACC_F)</th>
+              <th class="py-4 px-4">Avg Forgetting</th>
+              <th class="py-4 px-4">BWT</th>
+              <th class="py-4 px-4">Train Time</th>
+              <th class="py-4 px-6 text-right">Status</th>
+            </tr></thead>
+            <tbody class="divide-y divide-border-soft font-inter text-sm text-ink-primary" id="resultsTableBody">
+              <tr><td colspan="8" class="py-8 text-center text-ink-muted font-mono text-xs">Loading results from API...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="p-4 bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-2 text-ink-muted font-mono text-[10px]">
+          <span>Task-IL Protocol. ResNet-18 backbone. Seed: 42. 5 epochs/task. AdamW lr=5e-4.</span>
+          <span class="font-mono text-garnet font-semibold">VAL SET: TINY-IMAGENET OFFICIAL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: ACCURACY MATRIX -->
+<div class="page pt-14" id="page-matrix">
+  <section class="w-full bg-canvas/80 border-b border-border-soft px-4 sm:px-8 py-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="font-mono text-xs tracking-widest text-garnet font-bold uppercase">ACCURACY MATRIX R[i,j] — CONTINUAL LEARNING EVALUATION</div>
+      <h1 class="font-newsreader text-3xl md:text-4xl text-ink-primary font-bold tracking-tight mt-1">Accuracy Matrix <span class="font-normal italic text-ink-secondary">R[i, j]</span></h1>
+      <p class="font-inter text-sm text-ink-secondary mt-2 leading-relaxed max-w-4xl"><code class="font-mono text-garnet font-semibold px-1 py-0.5 rounded bg-canvas border border-border-soft">R[i, j]</code> = test accuracy on Task <strong>j</strong> after training on Task <strong>i</strong>. Diagonal = immediate performance; columns = retention/forgetting over time under Task-IL protocol.</p>
+      <div class="flex flex-wrap items-center gap-3 mt-4">
+        <label class="font-mono text-[10px] text-ink-muted uppercase tracking-wider">Method:</label>
+        <select id="matrixMethodSelect" onchange="loadMatrix()" class="h-9 px-3 bg-card-bg text-ink-primary font-mono text-xs rounded-lg border border-border-soft focus:outline-none focus:ring-1 focus:ring-garnet">
+          <option value="naive">Naive Sequential</option>
+          <option value="joint">Joint Training</option>
+          <option value="replay_m250">Replay (M=250)</option>
+          <option value="ewc">EWC</option>
+          <option value="lwf">LwF</option>
+          <option value="memorycore_m2000">MemoryCore (M=2000)</option>
+        </select>
+        <button onclick="loadMatrix()" class="h-9 px-4 rounded-lg bg-garnet text-[#FAF4D4] font-mono text-xs font-bold hover:bg-garnet-dark transition-colors">Load Matrix</button>
+      </div>
+    </div>
+  </section>
+  <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-8">
+    <div class="bg-card-bg border border-border-soft p-4 md:p-6 rounded shadow-sm">
+      <div class="overflow-x-auto" id="matrixContainer">
+        <div class="text-center py-16 text-ink-muted font-mono text-xs">Select a method above and click "Load Matrix" to view the 20×20 accuracy matrix.</div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-border-soft flex flex-wrap gap-4 items-center justify-between font-mono text-[10px] text-ink-muted">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-1"><div class="w-4 h-4 rounded-sm bg-green-300"></div><span>≥ 80% Strong</span></div>
+          <div class="flex items-center gap-1"><div class="w-4 h-4 rounded-sm bg-yellow-200"></div><span>50–80% Moderate</span></div>
+          <div class="flex items-center gap-1"><div class="w-4 h-4 rounded-sm bg-red-200"></div><span>&lt; 50% Forgetting</span></div>
+          <div class="flex items-center gap-1"><div class="w-4 h-4 rounded-sm bg-surface-container-high border border-border-soft"></div><span>Not trained yet</span></div>
+        </div>
+        <span>20×20 Accuracy Matrix · Task-IL · ResNet-18 · Seed: 42</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: MEMORY BUDGET -->
+<div class="page pt-14" id="page-memory">
+  <section class="w-full bg-canvas/80 border-b border-border-soft px-4 sm:px-8 py-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="font-mono text-xs tracking-widest text-garnet font-bold uppercase">MEMORY ANALYSIS // BUDGET IMPACT ON CONTINUAL LEARNING</div>
+      <h1 class="font-newsreader text-3xl md:text-4xl text-ink-primary font-bold tracking-tight mt-1">Memory Budget & Uncertainty Curation</h1>
+      <p class="font-inter text-sm text-ink-secondary mt-2 leading-relaxed max-w-3xl">How the fixed exemplar memory budget (M) affects final accuracy and forgetting — and why <em>what</em> you store matters more than <em>how much</em>.</p>
+    </div>
+  </section>
+  <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-card-bg border border-border-soft p-6 rounded shadow-sm">
+        <h2 class="font-newsreader text-2xl font-bold text-ink-primary mb-4">What is Memory Budget?</h2>
+        <div class="space-y-4 font-inter text-sm text-ink-secondary leading-relaxed">
+          <p>The <strong class="text-ink-primary">Memory Budget (M)</strong> is the maximum number of historical training images the continual learner is allowed to retain in storage across ALL previous tasks.</p>
+          <div class="p-4 rounded-lg bg-surface-container border border-border-soft">
+            <div class="font-mono text-[11px] text-garnet font-bold mb-1">CAPACITY MATH · M=2000</div>
+            <div class="font-mono text-xs text-ink-primary">2000 exemplars ÷ 20 tasks = 100 images/task boundary</div>
+          </div>
+          <p>For <strong class="text-garnet">MemoryCore</strong>, these 100 images/task are NOT chosen randomly. They are the 100 with the highest Cross-Entropy loss — the hardest decision boundary cases that the model is most uncertain about.</p>
+          <p>For <strong class="text-ink-primary">Random Replay</strong>, 100 images/task are chosen uniformly at random — no preference for hard or important cases.</p>
+          <div class="mt-4 p-4 rounded-lg bg-rose-bg/40 border border-rose/20">
+            <div class="font-newsreader text-[17px] font-semibold text-garnet mb-1">Why MemoryCore Wins</div>
+            <div class="font-inter text-xs text-ink-secondary">By curating the hardest ~5% of samples (highest CE loss) rather than random 5%, MemoryCore squeezes dramatically more forgetting prevention from the same memory constraint. Decision boundaries are exactly what the model needs to remember — and exactly what's most vulnerable to catastrophic overwriting.</div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-card-bg border border-border-soft p-6 rounded shadow-sm">
+        <h2 class="font-newsreader text-2xl font-bold text-ink-primary mb-4">Available Budget Settings</h2>
+        <div class="space-y-3">
+          <div class="p-4 rounded-lg bg-surface-container-low border border-border-soft flex items-center justify-between"><div><div class="font-mono text-[11px] text-garnet font-bold">M = 250</div><div class="font-inter text-xs text-ink-muted">~12 exemplars / task</div></div><div class="text-right"><div class="font-mono text-xs text-ink-secondary">~1.9 MB RAM</div><code class="font-mono text-[10px] text-garnet">--memory-budget 250</code></div></div>
+          <div class="p-4 rounded-lg bg-surface-container-low border border-border-soft flex items-center justify-between"><div><div class="font-mono text-[11px] text-garnet font-bold">M = 500</div><div class="font-inter text-xs text-ink-muted">~25 exemplars / task</div></div><div class="text-right"><div class="font-mono text-xs text-ink-secondary">~3.8 MB RAM</div><code class="font-mono text-[10px] text-garnet">--memory-budget 500</code></div></div>
+          <div class="p-4 rounded-lg bg-canvas border-2 border-garnet flex items-center justify-between"><div><div class="font-mono text-[11px] text-garnet font-bold">M = 2000 ← Default</div><div class="font-inter text-xs text-garnet/70">100 exemplars / task</div></div><div class="text-right"><div class="font-mono text-xs text-garnet">~15.2 MB RAM</div><div class="font-mono text-[10px] text-garnet font-bold">Recommended</div></div></div>
+          <div class="p-4 rounded-lg bg-surface-container-low border border-border-soft flex items-center justify-between"><div><div class="font-mono text-[11px] text-garnet font-bold">M = 5000</div><div class="font-inter text-xs text-ink-muted">250 exemplars / task</div></div><div class="text-right"><div class="font-mono text-xs text-ink-secondary">~38 MB RAM</div><code class="font-mono text-[10px] text-garnet">--memory-budget 5000</code></div></div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-border-soft">
+          <p class="font-inter text-xs text-ink-muted">Run with a specific budget: <code class="font-mono text-garnet text-[11px] px-1 py-0.5 bg-surface-container rounded">python run.py --method memorycore --memory-budget 5000</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- METHOD DETAIL MODAL -->
+<div id="detailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-ink-primary/75 backdrop-blur-sm hidden opacity-0 transition-all duration-200" onclick="if(event.target===this) closeDetailModal()">
+  <div class="relative w-full max-w-3xl bg-[#FAF4D4] border border-[#E4DDCF] rounded-2xl shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
+    <!-- Header -->
+    <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#E4DDCF]">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span id="modalBadge" class="inline-flex items-center px-3 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase tracking-wider"></span>
+          <span id="modalRunId" class="font-mono text-xs text-ink-muted"></span>
+        </div>
+        <h2 id="modalTitle" class="font-newsreader text-2xl sm:text-3xl font-bold text-garnet tracking-tight"></h2>
+        <p id="modalDesc" class="font-inter text-xs text-ink-secondary mt-1.5 leading-relaxed max-w-2xl"></p>
+      </div>
+      <button onclick="closeDetailModal()" class="w-9 h-9 shrink-0 rounded-full bg-surface-container-high hover:bg-garnet hover:text-[#FAF4D4] text-ink-primary flex items-center justify-center transition-colors">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+    </div>
+
+    <!-- 4 Big Key KPI Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 my-6">
+      <div class="p-4 rounded-xl bg-surface-container-lowest border border-[#E4DDCF] text-center shadow-xs">
+        <span class="font-mono text-[10px] text-ink-muted uppercase tracking-wider block mb-1">Final Accuracy</span>
+        <div id="modalAcc" class="font-newsreader text-3xl sm:text-4xl font-bold text-garnet my-0.5"></div>
+        <span class="font-mono text-[10px] text-ink-muted block mt-1">Across all seen tasks</span>
+      </div>
+      <div class="p-4 rounded-xl bg-surface-container-lowest border border-[#E4DDCF] text-center shadow-xs">
+        <span class="font-mono text-[10px] text-ink-muted uppercase tracking-wider block mb-1">Avg Forgetting</span>
+        <div id="modalForgetting" class="font-mono text-2xl sm:text-3xl font-bold text-ink-primary my-0.5"></div>
+        <span class="font-mono text-[10px] text-ink-muted block mt-1">Lower is better</span>
+      </div>
+      <div class="p-4 rounded-xl bg-surface-container-lowest border border-[#E4DDCF] text-center shadow-xs">
+        <span class="font-mono text-[10px] text-ink-muted uppercase tracking-wider block mb-1">Backward Transfer</span>
+        <div id="modalBWT" class="font-mono text-2xl sm:text-3xl font-bold text-ink-primary my-0.5"></div>
+        <span class="font-mono text-[10px] text-ink-muted block mt-1">BWT retention score</span>
+      </div>
+      <div class="p-4 rounded-xl bg-surface-container-lowest border border-[#E4DDCF] text-center shadow-xs">
+        <span class="font-mono text-[10px] text-ink-muted uppercase tracking-wider block mb-1">Memory Budget</span>
+        <div id="modalBudget" class="font-mono text-2xl sm:text-3xl font-bold text-ink-primary my-0.5"></div>
+        <span class="font-mono text-[10px] text-ink-muted block mt-1">Replay capacity</span>
+      </div>
+    </div>
+
+    <!-- Specifications Grid -->
+    <div class="p-4 rounded-xl bg-surface-container-low border border-[#E4DDCF] mb-6">
+      <h4 class="font-mono text-[11px] font-bold text-garnet uppercase tracking-wider mb-3 flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[15px]">tune</span>
+        Benchmark Specifications & Hyperparameters
+      </h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-y-3 gap-x-4 font-mono text-xs">
+        <div><span class="text-ink-muted block text-[10px]">TOTAL TASKS</span><span id="modalTasks" class="text-ink-primary font-semibold"></span></div>
+        <div><span class="text-ink-muted block text-[10px]">DATASET / CLASSES</span><span class="text-ink-primary font-semibold">Tiny-ImageNet (200 Cls)</span></div>
+        <div><span class="text-ink-muted block text-[10px]">TRAIN TIME</span><span id="modalTime" class="text-ink-primary font-semibold"></span></div>
+        <div><span class="text-ink-muted block text-[10px]">MODEL BACKBONE</span><span class="text-ink-primary font-semibold">ResNet-18 (Pretrained)</span></div>
+        <div><span class="text-ink-muted block text-[10px]">EVALUATION PROTOCOL</span><span class="text-ink-primary font-semibold">Task-IL (Isolated heads)</span></div>
+        <div><span class="text-ink-muted block text-[10px]">OPTIMIZER / LR</span><span class="text-ink-primary font-semibold">AdamW · 5e-4 (Cosine)</span></div>
+      </div>
+    </div>
+
+    <!-- Per-Task Retained Accuracy Breakdown -->
+    <div id="modalTaskBreakdownContainer" class="mb-6">
+      <h4 class="font-mono text-[11px] font-bold text-garnet uppercase tracking-wider mb-3 flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[15px]">bar_chart</span>
+        Per-Task Retained Accuracy (Task-IL)
+      </h4>
+      <div id="modalTaskPills" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2"></div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#E4DDCF]">
+      <button id="modalMatrixBtn" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-garnet text-[#FAF4D4] font-mono text-xs font-bold hover:bg-garnet-dark transition-all shadow-sm">
+        <span class="material-symbols-outlined text-[16px]">grid_view</span>
+        <span>View in Accuracy Matrix</span>
+      </button>
+      <button onclick="closeDetailModal()" class="px-5 py-2.5 rounded-lg border border-[#E4DDCF] bg-surface-container hover:bg-surface-container-high text-ink-primary font-mono text-xs font-semibold transition-colors">
+        Close (Esc)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+const BASE_URL = 'http://127.0.0.1:8000';
+
+// ---- Navigation ----
+function showPage(pageId, linkEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active', 'bg-garnet', 'text-[#FAF4D4]'));
+  const page = document.getElementById('page-' + pageId);
+  if (page) page.classList.add('active');
+  if (linkEl) linkEl.classList.add('active');
+  return false;
+}
+
+// ---- API ----
+async function checkAPI() {
+  try {
+    const r = await fetch(BASE_URL + '/api/health', { signal: AbortSignal.timeout(2000) });
+    if (r.ok) document.getElementById('apiStatus').innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-garnet anim-pulse"></span>API: CONNECTED';
+  } catch { document.getElementById('apiStatus').innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-error"></span>API: OFFLINE'; }
+}
+
+let allExperiments = [];
+
+function getCanonicalKey(item) {
+  const s = ((item.method || '') + ' ' + (item.id || '')).toLowerCase();
+  if (s.includes('memorycore')) return 'memorycore';
+  if (s.includes('joint')) return 'joint';
+  if (s.includes('replay')) return 'replay';
+  if (s.includes('ewc')) return 'ewc';
+  if (s.includes('lwf')) return 'lwf';
+  if (s.includes('naive')) return 'naive';
+  return (item.method || item.id || '').toLowerCase();
+}
+
+function deduplicateExperiments(exps) {
+  allExperiments = exps;
+  const groups = {};
+  for (const exp of exps) {
+    const key = getCanonicalKey(exp);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(exp);
+  }
+
+  const order = ['memorycore', 'joint', 'replay', 'ewc', 'lwf', 'naive'];
+  const latestList = [];
+
+  for (const key of order) {
+    if (groups[key] && groups[key].length > 0) {
+      // Prioritize full benchmarks over smoke tests, then newest mtime, then highest accuracy
+      groups[key].sort((a, b) => {
+        const aSmoke = a.is_smoke || a.id.startsWith('smoke_') ? 1 : 0;
+        const bSmoke = b.is_smoke || b.id.startsWith('smoke_') ? 1 : 0;
+        if (aSmoke !== bSmoke) return aSmoke - bSmoke; // non-smoke first
+        const aTime = a.mtime || 0;
+        const bTime = b.mtime || 0;
+        if (bTime !== aTime) return bTime - aTime; // newest first
+        return (b.final_average_accuracy || 0) - (a.final_average_accuracy || 0);
+      });
+      latestList.push(groups[key][0]);
+    }
+  }
+
+  // Also populate matrix dropdown with available experiments
+  populateMatrixDropdown(exps);
+
+  return latestList;
+}
+
+function populateMatrixDropdown(exps) {
+  const sel = document.getElementById('matrixMethodSelect');
+  if (!sel) return;
+  const curVal = sel.value;
+  const uniqueIds = [...new Set(exps.map(e => e.id))];
+  if (!uniqueIds.length) return;
+  sel.innerHTML = uniqueIds.map(id => {
+    const key = getCanonicalKey({ id });
+    const name = (ML[key] || id) + (id.startsWith('smoke_') ? ' (Smoke)' : '');
+    return `<option value="${id}">${name}</option>`;
+  }).join('');
+  if (uniqueIds.includes(curVal)) sel.value = curVal;
+  else if (uniqueIds.includes('memorycore_m5000')) sel.value = 'memorycore_m5000';
+  else if (uniqueIds.includes('joint')) sel.value = 'joint';
+  else sel.value = uniqueIds[0];
+}
+
+async function loadAllResults() {
+  try {
+    const r = await fetch(BASE_URL + '/api/experiments');
+    const rawExps = await r.json();
+    if (rawExps && rawExps.length) {
+      const exps = deduplicateExperiments(rawExps);
+      renderTable(exps);
+      renderChart(exps);
+      updateRibbons(rawExps);
+      updateKPIs(exps);
+      renderRecentRuns(rawExps);
+    } else {
+      renderFallbackTable();
+    }
+  } catch {
+    renderFallbackTable();
+  }
+}
+
+function formatTime(s) {
+  if (!s) return '—';
+  if (s < 60) return s.toFixed(0) + 's';
+  return Math.floor(s/60) + 'm ' + Math.round(s%60) + 's';
+}
+
+function updateRibbons(exps) {
+  const mc = exps.find(e => e.method?.includes('memorycore') || e.id?.includes('memorycore'));
+  if (!mc) return;
+  setEl('ribbon-acc', mc.final_average_accuracy != null ? mc.final_average_accuracy.toFixed(2) + '%' : '—');
+  setEl('ribbon-forget', mc.average_forgetting != null ? mc.average_forgetting.toFixed(2) + '%' : '—');
+  setEl('ribbon-bwt', mc.backward_transfer != null ? mc.backward_transfer.toFixed(2) : '—');
+  setEl('ribbon-tasks', (mc.tasks_completed ?? mc.num_tasks ?? '—') + ' / ' + (mc.total_tasks ?? 10));
+  setEl('ribbon-time', formatTime(mc.training_time_seconds));
+  if (mc.memory_budget) setEl('ribbon-mem', mc.memory_budget + ' <span class="text-xs font-normal text-ink-muted">Ex</span>');
+}
+
+function updateKPIs(exps) {
+  const sorted = [...exps].sort((a,b)=>(b.final_average_accuracy||0)-(a.final_average_accuracy||0));
+  const best = sorted[0];
+  const mc = exps.find(e => e.method?.includes('memorycore'));
+  if (best) { setEl('kpi-acc', best.final_average_accuracy?.toFixed(1)+'%'); setEl('kpi-acc-badge', best.method?.toUpperCase()); }
+  if (mc) { setEl('kpi-forget', mc.average_forgetting?.toFixed(1)+'%'); setEl('kpi-bwt', mc.backward_transfer?.toFixed(2)); }
+  setEl('kpi-methods', exps.length);
+}
+
+function setEl(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
+
+function renderRecentRuns(exps) {
+  const c = document.getElementById('recentRuns');
+  if (!c || !exps.length) { if (c) c.innerHTML = '<div class="py-3 text-ink-muted font-mono text-[10px]">No runs yet. Run a method first.</div>'; return; }
+  c.innerHTML = exps.slice(0,5).map(e => `
+    <div onclick="openDetailModal('${e.id}')" class="py-3 px-2 rounded-lg flex items-center justify-between gap-2 hover:bg-surface-container cursor-pointer transition-colors">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-[11px] font-bold text-ink-primary">${e.id?.toUpperCase()}</span>
+          <span class="px-1.5 py-0.5 rounded bg-surface-container-high text-ink-primary font-mono text-[10px] font-semibold uppercase">Done</span>
+        </div>
+        <div class="text-ink-muted font-inter text-xs">${e.method} · M=${e.memory_budget??0}</div>
+      </div>
+      <div class="text-right">
+        <span class="text-garnet font-mono text-[11px] font-bold">${e.final_average_accuracy?.toFixed(1)??'—'}%</span>
+        <div class="text-[10px] text-ink-muted font-mono">${formatTime(e.training_time_seconds)}</div>
+      </div>
+    </div>`).join('');
+}
+
+const ML = {
+  naive: 'Naive Sequential Fine-Tuning',
+  joint: 'Joint Training (Upper Bound)',
+  replay: 'Random Experience Replay',
+  ewc: 'Elastic Weight Consolidation (EWC)',
+  lwf: 'Learning without Forgetting (LwF)',
+  memorycore: 'MemoryCore (DER++ Uncertainty-Aware)'
+};
+
+const MT = {
+  naive: { label: 'Lower Bound', cls: 'bg-error-container text-on-error-container' },
+  joint: { label: 'Upper Bound', cls: 'bg-surface-container text-ink-secondary' },
+  replay: { label: 'Rehearsal', cls: 'bg-surface-container text-ink-secondary' },
+  ewc: { label: 'Regularization', cls: 'bg-surface-container text-ink-secondary' },
+  lwf: { label: 'Distillation', cls: 'bg-surface-container text-ink-secondary' },
+  memorycore: { label: 'Research Method', cls: 'bg-garnet text-[#FAF4D4]' }
+};
+
+function renderTable(exps) {
+  const tbody = document.getElementById('resultsTableBody');
+  tbody.innerHTML = exps.map(e => {
+    const key = getCanonicalKey(e);
+    const isMC = key === 'memorycore';
+    const isNaive = key === 'naive';
+    const t = MT[key] || { label: 'Baseline', cls: 'bg-surface-container text-ink-secondary' };
+    const label = ML[key] || e.method || e.id;
+    const mem = e.memory_budget ? e.memory_budget + ' ex' : (key === 'joint' ? 'All data' : '0 ex');
+    const acc = e.final_average_accuracy != null ? e.final_average_accuracy.toFixed(2) + '%' : 'Not run yet';
+    const forget = e.average_forgetting != null ? e.average_forgetting.toFixed(2) + '%' : '—';
+    const bwt = e.backward_transfer != null ? e.backward_transfer.toFixed(3) : '—';
+    const time = formatTime(e.training_time_seconds);
+
+    return `<tr onclick="openDetailModal('${e.id}')" class="method-row cursor-pointer ${isMC ? 'bg-rose-bg/25 hover:bg-rose-bg/40' : isNaive ? 'bg-error-container/10 hover:bg-error-container/20' : 'hover:bg-garnet/5'} transition-all group border-b border-border-soft">
+      <td class="py-4 px-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            ${isMC ? '<span class="material-symbols-outlined text-garnet text-[18px]">verified</span>' : ''}
+            <span class="font-newsreader text-[17px] ${isMC ? 'text-garnet font-bold' : 'text-ink-primary font-medium'} group-hover:underline decoration-garnet/50">${label}</span>
+          </div>
+          <span class="font-mono text-[10px] text-garnet opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+            <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+            <span>Inspect</span>
+          </span>
+        </div>
+      </td>
+      <td class="py-4 px-4"><span class="inline-flex items-center px-3 py-0.5 rounded-full ${t.cls} font-mono text-[10px] font-semibold uppercase">${t.label}</span></td>
+      <td class="py-4 px-4 font-mono text-xs ${isMC ? 'text-garnet font-bold' : 'text-ink-primary'}">${mem}</td>
+      <td class="py-4 px-4"><span class="font-newsreader text-[18px] font-bold ${isNaive ? 'text-error' : isMC ? 'text-garnet' : 'text-ink-primary'}">${acc}</span></td>
+      <td class="py-4 px-4 font-mono text-xs ${isNaive ? 'text-error font-semibold' : 'text-ink-primary'}">${forget}</td>
+      <td class="py-4 px-4 font-mono text-xs ${isNaive ? 'text-error font-semibold' : 'text-ink-primary'}">${bwt}</td>
+      <td class="py-4 px-4 font-mono text-xs text-ink-secondary">${time}</td>
+      <td class="py-4 px-6 text-right">
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container group-hover:bg-garnet group-hover:text-[#FAF4D4] font-mono text-[10px] font-semibold text-ink-primary transition-colors shadow-2xs">
+          <span class="material-symbols-outlined text-[13px]">visibility</span>
+          <span>Details</span>
+        </span>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function renderFallbackTable() {
+  const rows = [
+    {id:'memorycore',method:'memorycore',memory_budget:5000,final_average_accuracy:null,average_forgetting:null,backward_transfer:null,training_time_seconds:null},
+    {id:'joint',method:'joint',memory_budget:null,final_average_accuracy:50.36,average_forgetting:0.0,backward_transfer:0.0,training_time_seconds:1060},
+    {id:'replay',method:'replay',memory_budget:250,final_average_accuracy:31.87,average_forgetting:49.47,backward_transfer:-44.12,training_time_seconds:1462},
+    {id:'ewc',method:'ewc',memory_budget:0,final_average_accuracy:0.95,average_forgetting:60.79,backward_transfer:-60.79,training_time_seconds:1420},
+    {id:'lwf',method:'lwf',memory_budget:0,final_average_accuracy:3.80,average_forgetting:71.63,backward_transfer:-71.23,training_time_seconds:1364},
+    {id:'naive',method:'naive',memory_budget:0,final_average_accuracy:1.48,average_forgetting:26.14,backward_transfer:-26.14,training_time_seconds:45}
+  ];
+  allExperiments = rows;
+  renderTable(rows);
+}
+
+// ---- Method Detail Modal ----
+function openDetailModal(id) {
+  const exp = allExperiments.find(e => e.id === id) || allExperiments.find(e => getCanonicalKey(e) === id) || { id, method: id };
+  const key = getCanonicalKey(exp);
+  const isMC = key === 'memorycore';
+  const isNaive = key === 'naive';
+  const t = MT[key] || { label: 'Baseline', cls: 'bg-surface-container text-ink-secondary' };
+  const title = ML[key] || exp.method || exp.id;
+
+  setEl('modalTitle', title);
+  setEl('modalRunId', `Run Artifact: results/${exp.id} ${exp.is_smoke ? '· [Offline Smoke Test]' : '· [Full Benchmark]'}`);
+
+  const mb = document.getElementById('modalBadge');
+  if (mb) {
+    mb.className = `inline-flex items-center px-3 py-0.5 rounded-full ${t.cls} font-mono text-[10px] font-bold uppercase tracking-wider`;
+    mb.textContent = t.label;
+  }
+
+  const descMap = {
+    memorycore: 'Continual Learning via Dark Experience Replay (DER++) with past logit distillation, preventing catastrophic forgetting while preserving plastic learning of novel tasks.',
+    joint: 'Theoretical upper bound performance: the model is trained on all tasks simultaneously with unconstrained access to all training data.',
+    replay: 'Experience rehearsal baseline with random reservoir sampling, replaying historical exemplars alongside current task data.',
+    ewc: 'Elastic Weight Consolidation (Kirkpatrick et al., 2017): parameter regularization penalizing shifts to weights with high Fisher Information.',
+    lwf: 'Learning without Forgetting (Li & Hoeim, 2016): data-free knowledge distillation penalizing output shifts on new data.',
+    naive: 'Unconstrained sequential fine-tuning (lower bound), demonstrating baseline catastrophic forgetting as new tasks overwrite previous weights.'
+  };
+  setEl('modalDesc', descMap[key] || 'Detailed empirical evaluation results, hyperparameters, and task retention telemetry.');
+
+  // Big KPIs
+  const acc = exp.final_average_accuracy != null ? exp.final_average_accuracy.toFixed(2) + '%' : '—';
+  const forget = exp.average_forgetting != null ? exp.average_forgetting.toFixed(2) + '%' : '—';
+  const bwt = exp.backward_transfer != null ? exp.backward_transfer.toFixed(3) : '—';
+  const mem = exp.memory_budget ? exp.memory_budget.toLocaleString() + ' exemplars' : (key === 'joint' ? 'All data' : '0 exemplars');
+
+  setEl('modalAcc', acc);
+  setEl('modalForgetting', forget);
+  setEl('modalBWT', bwt);
+  setEl('modalBudget', mem);
+
+  // Specifications
+  setEl('modalTasks', (exp.tasks_completed ?? exp.total_tasks ?? 10) + ' Tasks');
+  setEl('modalTime', formatTime(exp.training_time_seconds));
+
+  // Per-task accuracies
+  const pillsContainer = document.getElementById('modalTaskPills');
+  const breakdownContainer = document.getElementById('modalTaskBreakdownContainer');
+
+  if (exp.per_task_accuracies && Object.keys(exp.per_task_accuracies).length > 0) {
+    breakdownContainer.style.display = 'block';
+    const entries = Object.entries(exp.per_task_accuracies);
+    pillsContainer.innerHTML = entries.map(([tid, tacc]) => {
+      const val = parseFloat(tacc);
+      const isHigh = val >= 70, isMid = val >= 40;
+      const colorCls = isHigh ? 'bg-emerald-100 text-emerald-900 border-emerald-300' : isMid ? 'bg-amber-100 text-amber-900 border-amber-300' : 'bg-rose-100 text-rose-900 border-rose-300';
+      return `<div class="p-2.5 rounded-lg border ${colorCls} text-center font-mono">
+        <div class="text-[10px] uppercase font-bold opacity-75">Task ${String(parseInt(tid)+1).padStart(2,'0')}</div>
+        <div class="text-base font-bold mt-0.5">${val.toFixed(1)}%</div>
+      </div>`;
+    }).join('');
+  } else {
+    breakdownContainer.style.display = 'none';
+  }
+
+  // Link to matrix
+  const matrixBtn = document.getElementById('modalMatrixBtn');
+  if (matrixBtn) {
+    matrixBtn.onclick = () => {
+      closeDetailModal();
+      showPage('matrix', document.querySelector('[data-page=matrix]'));
+      const sel = document.getElementById('matrixMethodSelect');
+      if (sel) {
+        sel.value = exp.id;
+        loadMatrix();
+      }
+    };
+  }
+
+  // Show modal
+  const modal = document.getElementById('detailModal');
+  modal.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    modal.classList.remove('opacity-0');
+  });
+}
+
+function closeDetailModal() {
+  const modal = document.getElementById('detailModal');
+  if (!modal) return;
+  modal.classList.add('opacity-0');
+  setTimeout(() => {
+    modal.classList.add('hidden');
+  }, 200);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeDetailModal();
+});
+
+let chart = null;
+function renderChart(exps) {
+  const ctx = document.getElementById('comparisonChart');
+  if (!ctx) return;
+  if (chart) { chart.destroy(); chart = null; }
+  const labels = exps.map(e => (ML[e.method]||e.method).replace('(DER++ Uncertainty-Aware)','(DER++)').replace('(Upper Bound)','').replace('Fine-Tuning',''));
+  const accs = exps.map(e => e.final_average_accuracy||0);
+  const forgets = exps.map(e => e.average_forgetting||0);
+  const colors = exps.map(e => e.method?.includes('memorycore') ? '#650004' : '#DACFBC');
+  const fColors = exps.map(e => e.method?.includes('memorycore') ? '#df8f9c' : '#E4DDCF');
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [
+      { label: 'Final Avg Accuracy (%)', data: accs, backgroundColor: colors, borderRadius: 4, borderSkipped: false },
+      { label: 'Avg Forgetting (%)', data: forgets, backgroundColor: fColors, borderRadius: 4, borderSkipped: false }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { family: 'JetBrains Mono', size: 11 }, color: '#5C5153' } } },
+      scales: {
+        x: { ticks: { font: { family: 'JetBrains Mono', size: 9 }, color: '#7A6F72', maxRotation: 15 }, grid: { color: '#E4DDCF' } },
+        y: { beginAtZero: true, max: 100, ticks: { font: { family: 'JetBrains Mono', size: 10 }, color: '#7A6F72', callback: v => v + '%' }, grid: { color: '#E4DDCF' } }
+      }
+    }
+  });
+}
+
+// ---- Accuracy Matrix ----
+async function loadMatrix() {
+  const method = document.getElementById('matrixMethodSelect').value;
+  const c = document.getElementById('matrixContainer');
+  c.innerHTML = '<div class="text-center py-16 text-ink-muted font-mono text-xs">Loading matrix for ' + method + '...</div>';
+  try {
+    const r = await fetch(`${BASE_URL}/api/task-matrix?method=${method}`);
+    if (!r.ok) throw new Error();
+    const d = await r.json();
+    renderMatrix(d, c);
+  } catch {
+    c.innerHTML = `<div class="text-center py-16 text-ink-muted font-mono text-xs">No matrix found for "${method}". Run this method first:<br/><br/><code class="text-garnet font-mono text-xs">python run.py --method ${method.split('_')[0]}</code></div>`;
+  }
+}
+
+function renderMatrix(data, c) {
+  const m = data.matrix, nr = m.length, nc = m[0]?.length||0;
+  const cs = Math.max(28, Math.floor(560/nc));
+  function gc(v) { if (v==='NaN'||v==null||isNaN(v)) return {bg:'#F0EBE0',t:'#BFBAAA'}; const n=parseFloat(v); return n>=80?{bg:'#86efac',t:'#14532d'}:n>=60?{bg:'#fef08a',t:'#713f12'}:n>=40?{bg:'#fed7aa',t:'#7f1d1d'}:{bg:'#fca5a5',t:'#7f1d1d'}; }
+  const hdrs = Array.from({length:nc},(_,i)=>`<div style="width:${cs}px;text-align:center;font-family:'JetBrains Mono';font-size:9px;color:#7A6F72;flex-shrink:0">T${String(i+1).padStart(2,'0')}</div>`).join('');
+  const rows = m.map((row,i)=>{
+    const cells = row.map((v,j)=>{
+      if(j>i) return `<div style="width:${cs}px;height:${cs}px;flex-shrink:0;background:#F0EBE0;opacity:0.4;border-radius:2px"></div>`;
+      const {bg,t}=gc(v); const disp=v==='NaN'?'—':(parseFloat(v).toFixed(0)+'%');
+      return `<div class="matrix-cell" style="width:${cs}px;height:${cs}px;flex-shrink:0;background:${bg};border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:${cs>35?10:8}px;color:${t};font-weight:600" title="After Task ${i+1}, Eval Task ${j+1}: ${v}%">${disp}</div>`;
+    }).join('');
+    return `<div style="display:flex;align-items:center;gap:2px;margin-bottom:2px"><div style="width:48px;flex-shrink:0;text-align:right;padding-right:4px;font-family:'JetBrains Mono';font-size:9px;color:#7A6F72">Post-T${String(i+1).padStart(2,'0')}</div>${cells}</div>`;
+  }).join('');
+  c.innerHTML = `<div style="overflow-x:auto"><div style="min-width:${52+nc*(cs+2)}px"><div style="display:flex;align-items:center;gap:2px;margin-left:52px;margin-bottom:4px">${hdrs}</div>${rows}</div></div>`;
+}
+
+// ---- Control ----
+let st = { strategy:'memorycore', memory_budget:5000, batch_size:32, lr:0.0005 };
+
+function selectStrategy(el) {
+  document.querySelectorAll('.strategy-card').forEach(c => {
+    c.classList.remove('selected'); c.style.border='1px solid #E4DDCF';
+    const h=c.querySelector('h3'); if(h){h.className='font-newsreader text-[17px] text-ink-primary font-medium';}
+    const ci=c.querySelector('.w-5'); if(ci){ci.className='w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-transparent';}
+  });
+  el.classList.add('selected'); el.style.border='2px solid #650004';
+  const h=el.querySelector('h3'); if(h) h.className='font-newsreader text-[17px] text-garnet font-bold';
+  const ci=el.querySelector('.w-5'); if(ci) ci.className='w-5 h-5 rounded-full bg-garnet flex items-center justify-center';
+  st.strategy = el.dataset.strategy;
+  const nb=['naive','joint','lwf'].includes(st.strategy);
+  const rbc=document.getElementById('replayBufferContainer');
+  if(rbc){rbc.style.opacity=nb?'0.4':'1';rbc.style.pointerEvents=nb?'none':'auto';}
+  updatePayload();
+}
+
+function updateBuffer(v) { st.memory_budget=parseInt(v); setEl('bufferDisplay', v+' exemplars'); updatePayload(); }
+function setBuffer(v) { st.memory_budget=v; document.getElementById('bufferSlider').value=v; setEl('bufferDisplay',v+' exemplars'); updatePayload(); }
+function selectBatch(el,v) {
+  document.querySelectorAll('.batch-btn').forEach(b=>{b.className='batch-btn h-11 rounded-lg bg-surface-container-low text-ink-primary font-mono text-sm hover:bg-surface-container transition-colors border border-border-soft';});
+  el.className='batch-btn h-11 rounded-lg bg-garnet text-[#FAF4D4] font-mono text-sm font-bold border border-garnet';
+  st.batch_size=v; updatePayload();
+}
+
+let curTab='cli';
+function showTab(t) {
+  curTab=t;
+  document.getElementById('tabCli').className=t==='cli'?'px-3 py-1 rounded bg-surface-container text-garnet font-bold border border-border-soft':'px-3 py-1 rounded hover:bg-surface-container text-ink-muted';
+  document.getElementById('tabJson').className=t==='json'?'px-3 py-1 rounded bg-surface-container text-garnet font-bold border border-border-soft':'px-3 py-1 rounded hover:bg-surface-container text-ink-muted';
+  setEl('cliLabel',t==='cli'?'Terminal · PowerShell':'HTTP Body · JSON');
+  document.getElementById('payloadPreview').style.display=t==='cli'?'block':'none';
+  document.getElementById('jsonPreview').style.display=t==='json'?'block':'none';
+}
+
+function updatePayload() {
+  const lr=parseFloat(document.getElementById('lrInput')?.value||0.0005);
+  const lam=parseFloat(document.getElementById('regInput')?.value||100);
+  let cli=`python run.py \\\n  --method ${st.strategy}`;
+  if(['memorycore','replay'].includes(st.strategy)) cli+=` \\\n  --memory-budget ${st.memory_budget}`;
+  if(st.strategy==='ewc') cli+=` \\\n  --ewc-lambda ${lam}`;
+  setEl('payloadPreview', null); document.getElementById('payloadPreview').textContent=cli;
+  const obj={strategy:st.strategy, batch_size:st.batch_size, learning_rate:lr, seed:42};
+  if(['memorycore','replay'].includes(st.strategy)) obj.memory_budget=st.memory_budget;
+  if(st.strategy==='ewc') obj.ewc_lambda=lam;
+  document.getElementById('jsonPreview').textContent=JSON.stringify(obj,null,2);
+}
+
+function copyPayload() {
+  const t=curTab==='cli'?document.getElementById('payloadPreview').textContent:document.getElementById('jsonPreview').textContent;
+  navigator.clipboard.writeText(t).catch(()=>{});
+}
+
+// ---- Init ----
+document.addEventListener('DOMContentLoaded', () => {
+  checkAPI(); loadAllResults(); updatePayload();
+  setInterval(checkAPI, 15000);
+  // set default active page from nav
+  document.querySelector('[data-page=baselines]')?.classList.add('active');
+});
+</script>
+</body>
+</html>
+

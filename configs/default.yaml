@@ -1,0 +1,14 @@
+# Default config identical to base config.yaml
+# Can be overridden for full benchmarks
+dataset:
+  scenario: "NIC_v2_79"
+  run_id: 0
+  num_tasks: 79
+
+training:
+  epochs_per_task: 1
+  batch_size: 32
+  eval_batch_size: 64
+
+smoke_test:
+  enabled: false
